@@ -98,27 +98,12 @@ variable "os_profile_admin_username" {
   description = "Specifies the name of the administrator account."
 }
 
-variable "os_profile_admin_public_key_path" {
+variable "os_profile_admin_password" {
   type        = string
-  description = "Specifies the public key of the administrator account."
+  description = "Specifies the password of the administrator account."
 }
 
-variable "storage_account_name" {
+variable "vm_public_ip_name" {
   type        = string
-  description = "Messenger storage account name"
-}
-
-variable "storage_container_name" {
-  type        = string
-  description = "Messenger storage container name"
-}
-
-variable "storage_account_tier" {
-  type        = string
-  description = "Messenger storage account tier"
-}
-
-variable "storage_account_replication" {
-  type        = string
-  description = "Messenger storage account replication strategy"
+  description = "Name of the public IP address"
 }
