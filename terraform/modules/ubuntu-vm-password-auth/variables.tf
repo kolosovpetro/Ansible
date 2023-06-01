@@ -1,8 +1,3 @@
-variable "prefix" {
-  type        = string
-  description = "Resources name prefix"
-}
-
 variable "resource_group_name" {
   type        = string
   description = "Resource group name"
@@ -13,14 +8,19 @@ variable "resource_group_location" {
   description = "Location of the resource group."
 }
 
-variable "vnet_name" {
+variable "vm_public_ip_name" {
   type        = string
-  description = "Name of the virtual network"
+  description = "Name of the public IP address"
 }
 
-variable "subnet_name" {
+variable "subnet_id" {
   type        = string
-  description = "Name of the subnet"
+  description = "ID of the subnet"
+}
+
+variable "network_security_group_id" {
+  type        = string
+  description = "ID of the network security group"
 }
 
 variable "network_interface_name" {

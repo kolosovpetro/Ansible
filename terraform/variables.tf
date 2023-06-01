@@ -33,6 +33,11 @@ variable "ip_configuration_name" {
   description = "Name of the IP configuration"
 }
 
+variable "nsg_name" {
+  type        = string
+  description = "Name of the network security group"
+}
+
 variable "vm_name" {
   type        = string
   description = "Name of the virtual machine"
