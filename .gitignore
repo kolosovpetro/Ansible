@@ -1,2 +1,5 @@
 .idea
+.terraform
 *.sas.conf
+*.tfplan
+*.tfstate
