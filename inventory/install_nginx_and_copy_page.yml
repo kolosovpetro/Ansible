@@ -1,0 +1,23 @@
+---
+- name: 'Install Nginx and copy page'
+  hosts: all
+  become: yes
+  
+  vars:
+    source_file=/home/razumovsky_r/AnsibleControlNode/files/index.html
+    dest_file=/var/www/html/index.nginx-debian.html
+  
+  tasks:
+    - name: 'Install Nginx'
+      apt: "name=nginx state=latest"
+
+    - name: 'Copy index.html and restart if file changed'
+      copy: src={{ source_file }} dest={{ dest_file }} mode=0555
+      notify: 'Restart nginx'
+
+    - name: 'Enable nginx'
+      service: "name=nginx state=started enabled=yes"
+  
+  handlers:
+    - name: 'Restart nginx'
+      service: "name=nginx state=restarted"
