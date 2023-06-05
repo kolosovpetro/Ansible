@@ -4,8 +4,8 @@
   become: yes
   
   vars:
-    source_file=/home/razumovsky_r/AnsibleControlNode/files/index.html
-    dest_file=/var/www/html/index.nginx-debian.html
+    source_file: /home/razumovsky_r/AnsibleControlNode/files/index.html
+    dest_file: /var/www/html/index.nginx-debian.html
   
   tasks:
     - name: 'Install Nginx'
