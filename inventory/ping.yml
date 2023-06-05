@@ -1,0 +1,9 @@
+---
+- name: 'Ping servers'
+  hosts: all
+  become: yes
+  
+  tasks:
+    - name: 'Ping all servers'
+      ping:
+        data: 'pong'
