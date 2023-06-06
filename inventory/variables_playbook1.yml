@@ -27,3 +27,15 @@
     - name: 'Print distribution variable (from -m setup)'
       debug:
         var: ansible_distribution
+
+    - name: 'Execute command and save output to variable'
+      shell: uptime
+      register: uptime_result
+      
+    - name: 'Print uptime result'
+      debug:
+        var: uptime_result
+        
+    - name: 'Print uptime result property'
+      debug:
+        var: uptime_result.stdout
