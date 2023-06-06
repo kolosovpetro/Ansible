@@ -23,3 +23,7 @@
     - name: 'Print defined var'
       debug:
         var: full_message
+
+    - name: 'Print distribution variable (from -m setup)'
+      debug:
+        var: ansible_distribution
