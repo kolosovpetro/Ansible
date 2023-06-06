@@ -1,0 +1,25 @@
+---
+- name: 'Sed example'
+  hosts: all
+  become: yes
+  
+  vars:
+    source_file: /home/razumovsky_r/AnsibleControlNode/inventory/for_sed_test.txt
+    dest_file: /home/razumovsky_r/for_sed_test.txt
+  
+  tasks:
+
+    - name: 'Copy txt file'
+      copy:
+        src: "{{ source_file }}"
+        dest: "{{ dest_file }}"
+        mode: 0555
+
+    - name: 'Print file content'
+      shell: cat "{{ dest_file }}"
+
+    - name: 'Sed file'
+      shell: sed -i "s|__placeholder__|{{ owner }}|" "{{ dest_file }}"
+
+    - name: 'Print file content after sed'
+      shell: cat "{{ dest_file }}"
