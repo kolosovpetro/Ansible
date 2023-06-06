@@ -31,3 +31,6 @@
 
     - debug:
         var: file_content_after_sed
+
+    - debug:
+        var: ansible_host
