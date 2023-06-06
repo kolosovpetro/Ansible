@@ -1,0 +1,14 @@
+---
+- name: Variables playbook one
+  hosts: all
+  become: true
+  
+  vars:
+    message1: Hello
+    message2: World
+    password: p@ssw0rd123
+  
+  tasks:
+    - name: Print password
+      debug:
+        var: password
