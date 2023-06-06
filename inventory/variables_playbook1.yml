@@ -12,3 +12,6 @@
     - name: Print password
       debug:
         var: password
+
+    - debug:
+        msg: "{{ message1 }} {{ message2 }} from {{ owner }}"
