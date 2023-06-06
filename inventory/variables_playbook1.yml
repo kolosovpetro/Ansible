@@ -15,3 +15,11 @@
 
     - debug:
         msg: "{{ message1 }} {{ message2 }} from {{ owner }}"
+
+    - name: 'Define own variable'
+      set_fact:
+        full_message: "{{ message1 }} {{ message2 }} from {{ owner }}"
+
+    - name: 'Print defined var'
+      debug:
+        var: full_message
