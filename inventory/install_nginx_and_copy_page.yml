@@ -8,6 +8,10 @@
     dest_file: /var/www/html/index.nginx-debian.html
   
   tasks:
+    - name: 'Print OS family'
+      debug:
+        var: ansible_os_family
+
     - name: 'Install Nginx'
       apt: "name=nginx state=latest"
 
