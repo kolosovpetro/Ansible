@@ -17,9 +17,17 @@
 
     - name: 'Print file content'
       shell: cat "{{ dest_file }}"
+      register: file_content
+
+    - debug:
+        var: file_content
 
     - name: 'Sed file'
       shell: sed -i "s|__placeholder__|{{ owner }}|" "{{ dest_file }}"
 
     - name: 'Print file content after sed'
       shell: cat "{{ dest_file }}"
+      register: file_content_after_sed
+
+    - debug:
+        var: file_content_after_sed
