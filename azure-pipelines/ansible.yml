@@ -51,3 +51,10 @@ stages:
 
           - script: ssh -v $(sshUser)@$(vmIpAddress) "hostname"
             displayName: 'Test SSH Connection'
+
+          - script: ansible --version
+            displayName: 'Check ansible version'
+
+          - script: ansible-playbook -i inventory_with_groups_and_aliases.ini ping.yml
+            displayName: 'Run ansible playbook'
+            workingDirectory: './playbooks'
