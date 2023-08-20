@@ -55,5 +55,5 @@ jobs:
         
       - name: Run ansible playbook
         working-directory: './playbooks'
-        run: ansible-playbook ping.yml
+        run: ansible-playbook -i inventory_with_groups_and_aliases.ini ping.yml
         shell: bash
