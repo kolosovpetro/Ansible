@@ -1,0 +1,57 @@
+name: Run ansible
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - master
+      - main
+      - develop
+
+  workflow_dispatch:
+
+#  schedule:
+#    - cron: '0 0 * * 0'
+
+jobs:
+  ansible:
+    name: Run ansible
+    runs-on: ${{ matrix.environment }}
+    strategy:
+      matrix:
+        environment:
+          - ubuntu-latest
+    
+    env:
+      DOTNET_NOLOGO: 1
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      SSH_PATH: /home/razumovsky_r/.ssh/id_rsa
+    
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check ansible
+        run: |
+          ansible --version
+          ansible-playbook --version
+
+      - name: 'Configure SSH'
+        run: |
+          mkdir -p ${{ env.SSH_PATH }}
+          echo "$SSH_KEY" > ${{ env.SSH_PATH }}
+          chmod 600 ${{ env.SSH_PATH }}
+        env:
+          SSH_KEY: ${{ secrets.UBUNTU_SSH_KEY }}
+          
+      - name: 'Run ansible'
+        working-directory: './playbooks'
+        run: |
+          ansible-playbook ping.yml
