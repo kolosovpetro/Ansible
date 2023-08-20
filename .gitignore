@@ -3,3 +3,4 @@
 *.sas.conf
 *.tfplan
 *.tfstate
+.ssh
