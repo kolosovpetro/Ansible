@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  VM_IP_ADDRESS: 20.234.90.21
+  VM_IP_ADDRESS: 13.69.137.115
   SSH_USER: razumovsky_r
 
 jobs:
