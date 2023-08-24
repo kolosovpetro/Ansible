@@ -2,25 +2,25 @@ all:
   children:
     all_servers:
       children:
-        db_servers:
+        app_servers:
           hosts:
-            secondnode:
-              ansible_host: 13.79.151.149
-              ansible_ssh_private_key_file: ~/.ssh/id_rsa
-              ansible_user: razumovsky_r
-              owner: Petya
-        development:
-          hosts:
-            thirdnode:
-              ansible_host: 13.79.150.253
+            app_server:
+              ansible_host: 52.169.114.72
               ansible_ssh_private_key_file: ~/.ssh/id_rsa
               ansible_user: razumovsky_r
               owner: Sanya
+        db_servers:
+          hosts:
+            db_server:
+              ansible_host: 40.113.79.36
+              ansible_ssh_private_key_file: ~/.ssh/id_rsa
+              ansible_user: razumovsky_r
+              owner: Petya
         web_servers:
           hosts:
-            firstnode:
-              ansible_host: 13.69.137.115
+            web_server:
+              ansible_host: 52.169.114.74
               ansible_ssh_private_key_file: ~/.ssh/id_rsa
               ansible_user: razumovsky_r
               owner: Vasya
-    ungrouped: { }
+    ungrouped: {}
