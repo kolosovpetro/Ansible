@@ -1,4 +1,5 @@
-- hosts: localhost
+- hosts: all
+  become: true
   tasks:
     - name: Download MS product repository
       get_url:
@@ -7,18 +8,15 @@
 
     - name: Install MS product repository
       apt: deb=/tmp/packages-microsoft-prod.deb
-      become: true
 
     - name: Make sure HTTPS is supported by apt
       apt:
         name: apt-transport-https
         state: present
         update_cache: no
-      become: true
 
     - name: Install .NET Core SDK
       apt:
         name: dotnet-sdk-6.0
         state: present
         update_cache: yes
-      become: true
