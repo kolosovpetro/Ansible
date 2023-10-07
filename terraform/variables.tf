@@ -88,10 +88,10 @@ variable "storage_os_disk_managed_disk_type" {
   description = "Specifies the storage account type for the managed disk."
 }
 
-variable "os_profile_computer_name" {
-  type        = string
-  description = "Specifies the host OS name of the virtual machine."
-}
+#variable "os_profile_computer_name" {
+#  type        = string
+#  description = "Specifies the host OS name of the virtual machine."
+#}
 
 variable "os_profile_admin_username" {
   type        = string
