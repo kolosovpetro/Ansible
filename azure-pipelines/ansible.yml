@@ -3,8 +3,8 @@ trigger: none
 pr: none
 
 variables:
-  - name: 'vmIpAddress'
-    value: '13.69.137.115'
+  - name: 'sshHost'
+    value: 'ansibleappserver.devtest.team'
   - name: 'sshUser'
     value: 'razumovsky_r'
 
@@ -20,9 +20,9 @@ stages:
         steps:
           - task: DownloadSecureFile@1
             name: sshKey
-            displayName: 'Download SSH key'
             inputs:
               secureFile: 'id_rsa'
+            displayName: 'Download SSH key'
 
           - script: |
               echo "Installing $(sshKey.secureFilePath) to SSH config"
@@ -31,7 +31,7 @@ stages:
               chmod 600 ~/.ssh/id_rsa
               cat >>~/.ssh/config <<END
               Host staging
-                HostName $(vmIpAddress)
+                HostName $(sshHost)
                 User $(sshUser)
                 IdentityFile ~/.ssh/id_rsa
                 StrictHostKeyChecking no
@@ -44,12 +44,12 @@ stages:
           - script: ssh staging -v "hostname"
             displayName: 'Test SSH Config'
 
-          - script: ssh -v $(sshUser)@$(vmIpAddress) "hostname"
+          - script: ssh -v $(sshUser)@$(sshHost) "hostname"
             displayName: 'Test SSH Connection'
 
           - script: ansible --version
             displayName: 'Check ansible version'
 
-          - script: ansible-playbook -i inventory_with_groups_and_aliases.ini ping.yml
+          - script: ansible-playbook -i inventory.yaml ping.yml
+            workingDirectory: '$(System.DefaultWorkingDirectory)/playbooks'
             displayName: 'Run ansible playbook'
-            workingDirectory: './playbooks'
