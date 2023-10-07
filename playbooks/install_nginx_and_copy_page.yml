@@ -4,7 +4,7 @@
   become: yes
   
   vars:
-    source_file: /home/razumovsky_r/AnsibleControlNode/files/index.html
+    source_file: ~/Desktop/RiderProjects/AnsibleControlNode/html/{{ htmlFile }}
     dest_file: /var/www/html/index.nginx-debian.html
   
   tasks:
