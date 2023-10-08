@@ -5,7 +5,7 @@
   
   vars:
     nginx_config: ../nginx/nginx.config.j2
-    nginx_config_dest: /etc/nginx/conf.d/disketov
+    nginx_config_dest: /etc/nginx/conf.d/disketov.conf
   
   tasks:
     - name: 'Generate nginx config'
