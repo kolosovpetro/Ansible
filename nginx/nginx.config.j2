@@ -1,0 +1,18 @@
+﻿server {
+    server_name {{ fqdn }};
+
+    location / {
+       include proxy_params;
+       proxy_pass http://127.0.0.1:{{ port }};
+    }
+
+    location /swagger {
+       include proxy_params;
+       proxy_pass http://127.0.0.1:{{ port }};
+    }
+
+    location /api {
+       include proxy_params;
+       proxy_pass http://127.0.0.1:{{ port }};
+    }
+}
