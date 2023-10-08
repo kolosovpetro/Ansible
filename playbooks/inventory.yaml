@@ -11,7 +11,7 @@ all:
               ansible_user: razumovsky_r
               owner: Sanya
               htmlFile: blue.html
-              fqdn: disketovlalka1.devtest.team
+              port: 8090
         db_servers:
           hosts:
             db_server:
@@ -20,7 +20,7 @@ all:
               ansible_user: razumovsky_r
               owner: Petya
               htmlFile: green.html
-              fqdn: disketovlalka2.devtest.team
+              port: 8090
         web_servers:
           hosts:
             web_server:
@@ -29,5 +29,5 @@ all:
               ansible_user: razumovsky_r
               owner: Vasya
               htmlFile: red.html
-              fqdn: disketovlalka3.devtest.team
+              port: 8090
     ungrouped: {}
