@@ -7,6 +7,8 @@ Gameplay with Ansible control node and multiple managed nodes.
 - Control node (SSH key authentication)
 - DB server (Password authentication -> then copy id to be executed)
 - Web server (Password authentication -> then copy id to be executed)
+- Windows DB server (RDP)
+- Windows Web server (RDP)
 
 ## DNS
 
@@ -16,7 +18,7 @@ Gameplay with Ansible control node and multiple managed nodes.
 - ansible.win.dbserver.razumovsky.me
 - ansible.win.webserver.razumovsky.me
 
-## SSH configuration for managed nodes
+## SSH configuration for Linux managed nodes
 
 From control node execute:
 
@@ -25,7 +27,16 @@ From control node execute:
 - ssh-copy-id -i ~/.ssh/id_rsa razumovsky_r@ansible.dbserver.razumovsky.me
 - ssh-copy-id -i ~/.ssh/id_rsa razumovsky_r@ansible.webserver.razumovsky.me
 
-## SSH connection commands
+## Control node initial configuration (Linux)
+
+- Validate that Python is installed
+- Install Ansible (see script `install_ansible.sh`)
+- Update Ansible global configuration file `ansible.cfg` by using `cp ansible.cfg /etc/ansible/ansible.cfg`
+  from the root of the repository
+- Update inventory file `inventory/inventory.yaml` if necessary
+- Check connection to managed nodes `ansible-playbook playbooks/ping.yaml`
+
+## SSH connection commands (Linux managed nodes)
 
 - ssh razumovsky_r@ansible.control.node.razumovsky.me
 - ssh razumovsky_r@ansible.dbserver.razumovsky.me
@@ -33,7 +44,7 @@ From control node execute:
 
 ## Provision infrastructure (Terraform)
 
-- Copy your SSH public key to 
+- Copy your SSH public key to
 
 ## Diagram
 
