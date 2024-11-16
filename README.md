@@ -18,6 +18,7 @@ Gameplay with Ansible control node and multiple managed nodes.
 
 From control node execute:
 
+- ssh razumovsky_r@ansible.control.node.razumovsky.me
 - ssh-keygen
 - ssh-copy-id -i ~/.ssh/id_rsa razumovsky_r@ansible.dbserver.razumovsky.me
 - ssh-copy-id -i ~/.ssh/id_rsa razumovsky_r@ansible.webserver.razumovsky.me
