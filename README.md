@@ -13,6 +13,8 @@ Gameplay with Ansible control node and multiple managed nodes.
 - ansible.control.node.razumovsky.me
 - ansible.dbserver.razumovsky.me
 - ansible.webserver.razumovsky.me
+- ansible.win.dbserver.razumovsky.me
+- ansible.win.webserver.razumovsky.me
 
 ## SSH configuration for managed nodes
 
