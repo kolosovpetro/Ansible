@@ -47,6 +47,8 @@ From control node execute:
 - https://docs.ansible.com/ansible/latest/os_guide/windows_winrm.html
 - https://docs.ansible.com/ansible/latest/os_guide/windows_setup.html
 - https://github.com/AlbanAndrieu/ansible-windows/blob/master/files/ConfigureRemotingForAnsible.ps1
+- Set-ExecutionPolicy -ExecutionPolicy Bypass
+- pip install "pywinrm>=0.3.0"
 
 ## Provision infrastructure (Terraform)
 
