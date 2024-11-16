@@ -25,14 +25,14 @@ all:
             db_server_windows:
               ansible_host: ansible.dbserver.razumovsky.me
               ansible_user: razumovsky_r
-              ansible_password: 123456
+              ansible_password: e0WN5r9Q0nPfBgrV
               ansible_port: 5986
               ansible_connection: winrm
               ansible_winrm_server_cert_validation: ignore
             web_server_windows:
               ansible_host: ansible.webserver.razumovsky.me
               ansible_user: razumovsky_r
-              ansible_password: 123456
+              ansible_password: e0WN5r9Q0nPfBgrV
               ansible_port: 5986
               ansible_connection: winrm
               ansible_winrm_server_cert_validation: ignore
