@@ -15,7 +15,6 @@ $Json = @"
   "proxied": false,
   "settings": {},
   "tags": [],
-  "ttl": 3600,
   "content": "$IpAddress",
   "type": "A"
 }
