@@ -102,3 +102,8 @@ variable "os_profile_admin_password" {
   type        = string
   description = "Specifies the password of the administrator account."
 }
+
+variable "subscription_id" {
+  type        = string
+  description = "Azure subscription ID"
+}
