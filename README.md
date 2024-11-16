@@ -42,6 +42,12 @@ From control node execute:
 - ssh razumovsky_r@ansible.dbserver.razumovsky.me
 - ssh razumovsky_r@ansible.webserver.razumovsky.me
 
+## Ansible for Windows
+
+- https://docs.ansible.com/ansible/latest/os_guide/windows_winrm.html
+- https://docs.ansible.com/ansible/latest/os_guide/windows_setup.html
+- https://github.com/AlbanAndrieu/ansible-windows/blob/master/files/ConfigureRemotingForAnsible.ps1
+
 ## Provision infrastructure (Terraform)
 
 - Copy your SSH public key to
