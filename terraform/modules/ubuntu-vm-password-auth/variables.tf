@@ -1,8 +1,3 @@
-variable "prefix" {
-  type        = string
-  description = "Resources name prefix"
-}
-
 variable "resource_group_name" {
   type        = string
   description = "Resource group name"
@@ -13,14 +8,9 @@ variable "resource_group_location" {
   description = "Location of the resource group."
 }
 
-variable "vnet_name" {
+variable "subnet_id" {
   type        = string
-  description = "Name of the virtual network"
-}
-
-variable "subnet_name" {
-  type        = string
-  description = "Name of the subnet"
+  description = "ID of the subnet"
 }
 
 variable "network_interface_name" {
@@ -31,11 +21,6 @@ variable "network_interface_name" {
 variable "ip_configuration_name" {
   type        = string
   description = "Name of the IP configuration"
-}
-
-variable "nsg_name" {
-  type        = string
-  description = "Name of the network security group"
 }
 
 variable "vm_name" {
@@ -88,17 +73,27 @@ variable "storage_os_disk_managed_disk_type" {
   description = "Specifies the storage account type for the managed disk."
 }
 
+variable "os_profile_computer_name" {
+  type        = string
+  description = "Specifies the host OS name of the virtual machine."
+}
+
 variable "os_profile_admin_username" {
   type        = string
   description = "Specifies the name of the administrator account."
 }
 
-variable "os_profile_admin_public_key_path" {
-  type        = string
-  description = "Specifies the path to the public key file of the administrator account."
-}
-
 variable "os_profile_admin_password" {
   type        = string
   description = "Specifies the password of the administrator account."
+}
+
+variable "public_ip_name" {
+  type        = string
+  description = "Name of the public IP"
+}
+
+variable "network_security_group_id" {
+  type        = string
+  description = "ID of the network security group"
 }

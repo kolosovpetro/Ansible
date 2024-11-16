@@ -30,7 +30,6 @@ resource "azurerm_virtual_machine" "public" {
   network_interface_ids = [azurerm_network_interface.public.id]
   vm_size               = var.vm_size
 
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
   delete_os_disk_on_termination = true
 
   storage_image_reference {
@@ -48,17 +47,13 @@ resource "azurerm_virtual_machine" "public" {
   }
 
   os_profile_linux_config {
-    disable_password_authentication = true
-
-    ssh_keys {
-      path     = "/home/${var.os_profile_admin_username}/.ssh/authorized_keys"
-      key_data = file(var.os_profile_admin_public_key_path)
-    }
+    disable_password_authentication = false
   }
 
   os_profile {
     computer_name  = var.os_profile_computer_name
     admin_username = var.os_profile_admin_username
+    admin_password = var.os_profile_admin_password
   }
 
   depends_on = [

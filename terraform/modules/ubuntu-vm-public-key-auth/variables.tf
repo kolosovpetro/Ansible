@@ -8,11 +8,6 @@ variable "resource_group_location" {
   description = "Location of the resource group."
 }
 
-variable "vnet_name" {
-  type        = string
-  description = "Name of the virtual network"
-}
-
 variable "subnet_name" {
   type        = string
   description = "Name of the subnet"
@@ -96,11 +91,6 @@ variable "os_profile_admin_public_key_path" {
 variable "public_ip_name" {
   type        = string
   description = "Name of the public IP"
-}
-
-variable "nsg_name" {
-  type        = string
-  description = "Name of the network security group"
 }
 
 variable "subnet_id" {

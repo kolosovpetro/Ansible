@@ -1,13 +1,13 @@
-output "app_server_public_ip" {
-  value = module.app_server.public_ip_address
+output "control_node_linux_public_ip" {
+  value = module.control_node.public_ip_address
 }
 
-output "web_server_public_ip" {
-  value = module.web_server.public_ip_address
+output "web_server_linux_public_ip" {
+  value = module.linux_servers[local.machines.web_server_linux.indexer].public_ip_address
 }
 
-output "db_server_public_ip" {
-  value = module.db_server.public_ip_address
+output "db_server_linux_public_ip" {
+  value = module.linux_servers[local.machines.db_server_linux.indexer].public_ip_address
 }
 
 output "os_user_name" {
