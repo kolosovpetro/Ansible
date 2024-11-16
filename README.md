@@ -2,6 +2,11 @@
 
 Gameplay with Ansible control node and multiple managed nodes.
 
+## Related repositories
+
+- https://github.com/kolosovpetro/packer-azure-windows-image
+- https://github.com/kolosovpetro/azure-windows-vm-terraform
+
 ## Infrastructure
 
 - Control node (SSH key authentication)
