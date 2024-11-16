@@ -1,4 +1,4 @@
-﻿locals {
+locals {
   rg_name     = "${var.resource_group_name}-${var.prefix}"
   nsg_name    = "${var.nsg_name}-${var.prefix}"
   subnet_name = "${var.subnet_name}-${var.prefix}"
