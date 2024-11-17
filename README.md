@@ -48,13 +48,21 @@ From control node execute:
     - `ansible-playbook ping.yml`
 - Windows nodes require additional configuration
 
+## Managed nodes initial configuration (Windows)
+
+- Login to your Windows machines via RDP
+- Open PowerShell as Administrator
+- Copy script contents from `Configure-Ansible-Host.ps1` to the terminal
+- Check connection to Windows managed nodes
+    - `ansible windows_servers -m win_ping`
+
 ## SSH connection commands (Linux managed nodes)
 
 - ssh razumovsky_r@ansible.control.node.razumovsky.me
 - ssh razumovsky_r@ansible.dbserver.razumovsky.me
 - ssh razumovsky_r@ansible.webserver.razumovsky.me
 
-## Ansible for Windows
+## Ansible for Windows Docs
 
 - https://docs.ansible.com/ansible/latest/os_guide/windows_winrm.html
 - https://docs.ansible.com/ansible/latest/os_guide/windows_setup.html
