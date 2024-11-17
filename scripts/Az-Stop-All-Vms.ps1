@@ -1,5 +1,5 @@
 ﻿# Login to Azure (if not already logged in)
-Connect-AzAccount
+#Connect-AzAccount
 
 # Define the resource group name
 $resourceGroupName = "rg-ansible-d01"
