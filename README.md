@@ -27,6 +27,7 @@ Gameplay with Ansible control node and multiple managed nodes.
 
 From control node execute:
 
+- Update `known_hosts` file by removing the old entries (if necessary)
 - ssh razumovsky_r@ansible.control.node.razumovsky.me
 - ssh-keygen
 - ssh-copy-id -i ~/.ssh/id_rsa razumovsky_r@ansible.dbserver.razumovsky.me
@@ -34,12 +35,18 @@ From control node execute:
 
 ## Control node initial configuration (Linux)
 
-- Validate that Python is installed
-- Install Ansible (see script `install_ansible.sh`)
-- Update Ansible global configuration file `ansible.cfg` by using `cp ansible.cfg /etc/ansible/ansible.cfg`
-  from the root of the repository
+- Validate Python installation
+    - `git clone git@github.com:kolosovpetro/ansible-control-node.git`
+    - `cd ansible-control-node`
+    - Run `install_python.sh`
+- Install Ansible
+    - Run `install_ansible.sh`
+- Update Ansible global configuration file `ansible.cfg`
+    - `sudo cp ansible.cfg /etc/ansible/ansible.cfg`
 - Update inventory file `inventory/inventory.yaml` if necessary
-- Check connection to managed nodes `ansible-playbook playbooks/ping.yaml`
+- Check connection to Linux managed nodes
+    - `ansible-playbook ping.yml`
+- Windows nodes require additional configuration
 
 ## SSH connection commands (Linux managed nodes)
 
