@@ -107,3 +107,13 @@ variable "subscription_id" {
   type        = string
   description = "Azure subscription ID"
 }
+
+variable "storage_account_replication" {
+  type        = string
+  description = "Specifies the replication type for this storage account."
+}
+
+variable "storage_account_tier" {
+  type        = string
+  description = "Specifies the tier to use for this storage account."
+}

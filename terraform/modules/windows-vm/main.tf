@@ -23,6 +23,11 @@ resource "azurerm_network_interface_security_group_association" "public" {
   network_security_group_id = var.network_security_group_id
 }
 
+# data "azurerm_image" "search" {
+#   name                = var.storage_image_reference_sku
+#   resource_group_name = var.image_resource_group_name
+# }
+
 resource "azurerm_virtual_machine" "public" {
   name                  = var.vm_name
   location              = var.resource_group_location
@@ -42,6 +47,10 @@ resource "azurerm_virtual_machine" "public" {
     sku       = var.storage_image_reference_sku
     version   = "latest"
   }
+
+  # storage_image_reference {
+  #   id = data.azurerm_image.search.id
+  # }
 
   storage_os_disk {
     name              = var.storage_os_disk_name

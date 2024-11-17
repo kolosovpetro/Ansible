@@ -44,7 +44,7 @@ locals {
       os_profile_computer_name    = "web-server-win"
       storage_os_disk_name        = "os-disk-web-server-windows-${var.prefix}"
       vm_name                     = "vm-web-server-win-${var.prefix}"
-      storage_image_reference_sku = "2019-Datacenter"
+      storage_image_reference_sku = "2022-Datacenter"
     }
     db_server_windows = {
       indexer                     = "db_server_windows"
@@ -55,6 +55,7 @@ locals {
       storage_os_disk_name        = "os-disk-db-server-windows-${var.prefix}"
       vm_name                     = "vm-db-server-win-${var.prefix}"
       storage_image_reference_sku = "2022-Datacenter"
+      image_resource_group_name   = "rg-packer-win-2019"
     }
   }
 }

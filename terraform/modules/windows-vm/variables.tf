@@ -71,3 +71,8 @@ variable "network_security_group_id" {
   type        = string
   description = "ID of the network security group"
 }
+
+# variable "image_resource_group_name" {
+#   type        = string
+#   description = "Name of the resource group where the image is stored"
+# }

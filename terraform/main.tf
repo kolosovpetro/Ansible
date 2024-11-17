@@ -74,9 +74,40 @@ module "windows_servers" {
   public_ip_name              = each.value.public_ip_name
   resource_group_location     = azurerm_resource_group.public.location
   resource_group_name         = azurerm_resource_group.public.name
-  storage_image_reference_sku = each.value.storage_image_reference_sku
   storage_os_disk_name        = each.value.storage_os_disk_name
   subnet_id                   = module.network.subnet_id
   vm_name                     = each.value.vm_name
+  #image_resource_group_name   = each.value.image_resource_group_name
+  storage_image_reference_sku = each.value.storage_image_reference_sku
   vm_size                     = var.vm_size
+}
+
+module "storage" {
+  source                      = "./modules/storage"
+  storage_account_name        = "storvmwin${var.prefix}"
+  storage_account_replication = var.storage_account_replication
+  storage_account_tier        = var.storage_account_tier
+  storage_container_name      = "contvmwin${var.prefix}"
+  storage_location            = azurerm_resource_group.public.location
+  storage_resource_group_name = azurerm_resource_group.public.name
+
+  depends_on = [
+    azurerm_resource_group.public
+  ]
+}
+
+module "custom_script_extension" {
+  for_each                              = local.windows_servers
+  source                                = "./modules/custom-script-extension"
+  custom_script_extension_absolute_path = "E:\\RiderProjects\\09_ANSIBLE\\ansible-control-node\\terraform\\scripts\\Configure-Ansible-Host.ps1"
+  custom_script_extension_file_name     = "Configure-Ansible-Host.ps1"
+  extension_name                        = "ConfigureAnsibleHost"
+  storage_account_name                  = module.storage.storage_account_name
+  storage_container_name                = module.storage.storage_container_name
+  virtual_machine_id                    = module.windows_servers[each.key].id
+
+  depends_on = [
+    module.storage,
+    module.windows_servers
+  ]
 }
