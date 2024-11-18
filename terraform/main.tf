@@ -63,20 +63,20 @@ module "linux_servers" {
 }
 
 module "windows_servers" {
-  for_each                    = local.windows_servers
-  source                      = "./modules/windows-vm"
-  ip_configuration_name       = each.value.ip_configuration_name
-  network_interface_name      = each.value.network_interface_name
-  network_security_group_id   = module.network.network_security_group_id
-  os_profile_admin_password   = var.os_profile_admin_password
-  os_profile_admin_username   = var.os_profile_admin_username
-  os_profile_computer_name    = each.value.os_profile_computer_name
-  public_ip_name              = each.value.public_ip_name
-  resource_group_location     = azurerm_resource_group.public.location
-  resource_group_name         = azurerm_resource_group.public.name
-  storage_os_disk_name        = each.value.storage_os_disk_name
-  subnet_id                   = module.network.subnet_id
-  vm_name                     = each.value.vm_name
+  for_each                  = local.windows_servers
+  source                    = "./modules/windows-vm"
+  ip_configuration_name     = each.value.ip_configuration_name
+  network_interface_name    = each.value.network_interface_name
+  network_security_group_id = module.network.network_security_group_id
+  os_profile_admin_password = var.os_profile_admin_password
+  os_profile_admin_username = var.os_profile_admin_username
+  os_profile_computer_name  = each.value.os_profile_computer_name
+  public_ip_name            = each.value.public_ip_name
+  resource_group_location   = azurerm_resource_group.public.location
+  resource_group_name       = azurerm_resource_group.public.name
+  storage_os_disk_name      = each.value.storage_os_disk_name
+  subnet_id                 = module.network.subnet_id
+  vm_name                   = each.value.vm_name
   #image_resource_group_name   = each.value.image_resource_group_name
   storage_image_reference_sku = each.value.storage_image_reference_sku
   vm_size                     = var.vm_size
