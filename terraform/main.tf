@@ -111,3 +111,18 @@ module "custom_script_extension" {
     module.windows_servers
   ]
 }
+
+module "control_node_install_ansible_extension" {
+  source                                = "./modules/linux-custom-script-extension"
+  custom_script_extension_absolute_path = "E:\\RiderProjects\\09_ANSIBLE\\ansible-control-node\\scripts\\install_ansible.sh"
+  custom_script_extension_file_name     = "install_ansible.sh"
+  extension_name                        = "InstallAnsible"
+  storage_account_name                  = module.storage.storage_account_name
+  storage_container_name                = module.storage.storage_container_name
+  virtual_machine_id                    = module.control_node.id
+
+  depends_on = [
+    module.storage,
+    module.windows_servers
+  ]
+}
