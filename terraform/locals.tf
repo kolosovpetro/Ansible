@@ -12,6 +12,7 @@ locals {
     os_profile_computer_name = "control-node"
     storage_os_disk_name     = "os-disk-control-node-${var.prefix}"
     vm_name                  = "vm-control-node-${var.prefix}"
+    dns_name                 = "ansible.control.node"
   }
 
   linux_servers = {
@@ -23,6 +24,7 @@ locals {
       os_profile_computer_name = "web-server"
       storage_os_disk_name     = "os-disk-web-server-${var.prefix}"
       vm_name                  = "vm-web-server-${var.prefix}"
+      dns_name                 = "ansible.webserver"
     }
     db_server_linux = {
       indexer                  = "db_server_linux"
@@ -32,6 +34,7 @@ locals {
       os_profile_computer_name = "db-server"
       storage_os_disk_name     = "os-disk-db-server-${var.prefix}"
       vm_name                  = "vm-db-server-${var.prefix}"
+      dns_name                 = "ansible.dbserver"
     }
   }
 
@@ -45,6 +48,7 @@ locals {
       storage_os_disk_name        = "os-disk-web-server-windows-${var.prefix}"
       vm_name                     = "vm-web-server-win-${var.prefix}"
       storage_image_reference_sku = "2022-Datacenter"
+      dns_name                    = "ansible.win.webserver"
     }
     db_server_windows = {
       indexer                     = "db_server_windows"
@@ -56,6 +60,7 @@ locals {
       vm_name                     = "vm-db-server-win-${var.prefix}"
       storage_image_reference_sku = "2022-Datacenter"
       image_resource_group_name   = "rg-packer-win-2019"
+      dns_name                    = "ansible.win.dbserver"
     }
   }
 }
