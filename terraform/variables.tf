@@ -117,3 +117,8 @@ variable "storage_account_tier" {
   type        = string
   description = "Specifies the tier to use for this storage account."
 }
+
+variable "cloudflare_api_token" {
+  type        = string
+  description = "Cloudflare API token"
+}

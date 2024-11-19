@@ -6,3 +6,7 @@ provider "azurerm" {
   }
   subscription_id = var.subscription_id
 }
+
+provider "cloudflare" {
+  api_token = var.cloudflare_api_token
+}
