@@ -36,17 +36,23 @@ From control node execute:
 ## Control node initial configuration (Linux)
 
 - Copy SSH key and configure permissions
-   - `scp "$env:USER_DIRECTORY/.ssh/id_rsa" razumovsky_r@ansible.control.node.razumovsky.me:~/.ssh`
-   - `ssh razumovsky_r@ansible.control.node.razumovsky.me "chmod 600 ~/.ssh/id_rsa"`
-   - `ssh razumovsky_r@ansible.control.node.razumovsky.me`
+    - `scp "$env:USER_DIRECTORY/.ssh/id_rsa" razumovsky_r@ansible.control.node.razumovsky.me:~/.ssh`
+    - `ssh razumovsky_r@ansible.control.node.razumovsky.me "chmod 600 ~/.ssh/id_rsa"`
+    - `ssh razumovsky_r@ansible.control.node.razumovsky.me`
 - Validate Python installation
     - `git clone git@github.com:kolosovpetro/ansible-control-node.git`
     - `cd ansible-control-node`
     - Run `install_python.sh`
 - Install Ansible
     - Run `install_ansible.sh`
-- Update Ansible global configuration file `ansible.cfg`
+- Copy Ansible global configuration file `ansible.cfg`
     - `sudo cp ansible.cfg /etc/ansible/ansible.cfg`
+    - `scp ansible.cfg razumovsky_r@ansible.control.node.razumovsky.me:~/ansible.cfg`
+    - `ssh razumovsky_r@ansible.control.node.razumovsky.me "sudo cp ~/ansible.cfg /etc/ansible/ansible.cfg"`
+- Copy Ansible inventory file `inventory/inventory.yaml`
+    - `sudo cp inventory/inventory.ini /etc/ansible/inventory.ini`
+    - `scp "inventory/inventory.ini" razumovsky_r@ansible.control.node.razumovsky.me:~/inventory.ini`
+    - `ssh razumovsky_r@ansible.control.node.razumovsky.me "sudo cp ~/inventory.ini /etc/ansible/inventory.ini"`
 - Update inventory file `inventory/inventory.yaml` if necessary
 - Check connection to Linux managed nodes
     - `ansible-playbook ping.yml`
