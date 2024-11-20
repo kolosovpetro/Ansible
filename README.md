@@ -35,6 +35,10 @@ From control node execute:
 
 ## Control node initial configuration (Linux)
 
+- Copy SSH key and configure permissions
+   - `scp "$env:USER_DIRECTORY/.ssh/id_rsa" razumovsky_r@ansible.control.node.razumovsky.me:~/.ssh`
+   - `ssh razumovsky_r@ansible.control.node.razumovsky.me "chmod 600 ~/.ssh/id_rsa"`
+   - `ssh razumovsky_r@ansible.control.node.razumovsky.me`
 - Validate Python installation
     - `git clone git@github.com:kolosovpetro/ansible-control-node.git`
     - `cd ansible-control-node`

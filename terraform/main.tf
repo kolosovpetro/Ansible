@@ -12,56 +12,12 @@ module "network" {
   vnet_name               = local.vnet_name
 }
 
-data "azurerm_client_config" "current" {}
-
-data "local_file" "ssh_private_key" {
-  filename = var.os_profile_admin_private_key_path
-}
-
-data "local_file" "ssh_public_key" {
-  filename = var.os_profile_admin_public_key_path
-}
-
-module "keyvault" {
-  source                  = "./modules/keyvault"
-  kv_location             = azurerm_resource_group.public.location
-  kv_name                 = "kv-ansible-${var.prefix}"
-  kv_resource_group_name  = azurerm_resource_group.public.name
-  object_id               = data.azurerm_client_config.current.object_id
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = local.key_permissions
-  secret_permissions      = local.secret_permissions
-  certificate_permissions = local.certificate_permissions
-}
-
-resource "azurerm_key_vault_access_policy" "keyvault_access_my_account" {
-  key_vault_id = module.keyvault.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = "66a7770f-0311-433d-9673-4f1877986857"
-
-  key_permissions         = local.key_permissions
-  secret_permissions      = local.secret_permissions
-  certificate_permissions = local.certificate_permissions
-}
-
-resource "azurerm_key_vault_secret" "ssh_private_key" {
-  name         = "SSH-Private-Key"
-  value        = data.local_file.ssh_private_key.content
-  key_vault_id = module.keyvault.id
-}
-
-resource "azurerm_key_vault_secret" "ssh_public_key" {
-  name         = "SSH-Public-Key"
-  value        = data.local_file.ssh_public_key.content
-  key_vault_id = module.keyvault.id
-}
-
 module "control_node" {
   source                            = "./modules/ubuntu-vm-public-key-auth"
   ip_configuration_name             = local.control_node.ip_configuration_name
   network_interface_name            = local.control_node.network_interface_name
   os_profile_admin_username         = var.os_profile_admin_username
-  os_profile_admin_public_key_value = azurerm_key_vault_secret.ssh_public_key.value
+  os_profile_admin_public_key_value = file(var.os_profile_admin_public_key_path)
   os_profile_computer_name          = local.control_node.os_profile_computer_name
   public_ip_name                    = local.control_node.public_ip_name
   resource_group_location           = azurerm_resource_group.public.location
@@ -82,12 +38,11 @@ module "control_node" {
 
 module "linux_servers" {
   for_each                          = local.linux_servers
-  source                            = "./modules/ubuntu-vm-password-auth"
+  source                            = "./modules/ubuntu-vm-public-key-auth"
   ip_configuration_name             = each.value.ip_configuration_name
   network_interface_name            = each.value.network_interface_name
   os_profile_admin_username         = var.os_profile_admin_username
   os_profile_computer_name          = each.value.os_profile_computer_name
-  os_profile_admin_password         = var.os_profile_admin_password
   public_ip_name                    = each.value.public_ip_name
   resource_group_location           = azurerm_resource_group.public.location
   resource_group_name               = azurerm_resource_group.public.name
@@ -103,6 +58,7 @@ module "linux_servers" {
   vm_size                           = var.vm_size
   subnet_id                         = module.network.subnet_id
   network_security_group_id         = module.network.network_security_group_id
+  os_profile_admin_public_key_value = file(var.os_profile_admin_public_key_path)
 }
 
 module "windows_servers" {
