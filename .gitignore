@@ -3,6 +3,8 @@
 *.sas.conf
 *.tfplan
 *.tfstate
-.ssh
-*.pub
 *.rdp
+
+# SSH keys
+id_rsa
+*.pub

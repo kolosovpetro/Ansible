@@ -52,7 +52,7 @@ resource "azurerm_virtual_machine" "public" {
 
     ssh_keys {
       path     = "/home/${var.os_profile_admin_username}/.ssh/authorized_keys"
-      key_data = file(var.os_profile_admin_public_key_path)
+      key_data = var.os_profile_admin_public_key_value
     }
   }
 

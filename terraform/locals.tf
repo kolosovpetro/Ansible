@@ -63,4 +63,57 @@ locals {
       dns_name                    = "ansible.win.dbserver"
     }
   }
+
+  secret_permissions = [
+    "Get",
+    "List",
+    "Set",
+    "Delete",
+    "Recover",
+    "Backup",
+    "Restore",
+    "Purge"
+  ]
+
+  certificate_permissions = [
+    "Backup",
+    "Create",
+    "Delete",
+    "DeleteIssuers",
+    "Get",
+    "GetIssuers",
+    "Import",
+    "List",
+    "ListIssuers",
+    "ManageContacts",
+    "ManageIssuers",
+    "Purge",
+    "Recover",
+    "Restore",
+    "SetIssuers",
+    "Update"
+  ]
+  
+  key_permissions = [
+    "Backup",
+    "Create",
+    "Decrypt",
+    "Delete",
+    "Encrypt",
+    "Get",
+    "Import",
+    "List",
+    "Purge",
+    "Recover",
+    "Restore",
+    "Sign",
+    "UnwrapKey",
+    "Update",
+    "Verify",
+    "WrapKey",
+    "Release",
+    "Rotate",
+    "GetRotationPolicy",
+    "SetRotationPolicy"
+  ]
 }

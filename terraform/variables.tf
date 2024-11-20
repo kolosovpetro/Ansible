@@ -98,6 +98,11 @@ variable "os_profile_admin_public_key_path" {
   description = "Specifies the path to the public key file of the administrator account."
 }
 
+variable "os_profile_admin_private_key_path" {
+  type        = string
+  description = "Specifies the path to the private key file of the administrator account."
+}
+
 variable "os_profile_admin_password" {
   type        = string
   description = "Specifies the password of the administrator account."

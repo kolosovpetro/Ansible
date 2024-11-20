@@ -12,11 +12,56 @@ module "network" {
   vnet_name               = local.vnet_name
 }
 
+data "azurerm_client_config" "current" {}
+
+data "local_file" "ssh_private_key" {
+  filename = var.os_profile_admin_private_key_path
+}
+
+data "local_file" "ssh_public_key" {
+  filename = var.os_profile_admin_public_key_path
+}
+
+module "keyvault" {
+  source                  = "./modules/keyvault"
+  kv_location             = azurerm_resource_group.public.location
+  kv_name                 = "kv-ansible-${var.prefix}"
+  kv_resource_group_name  = azurerm_resource_group.public.name
+  object_id               = data.azurerm_client_config.current.object_id
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+  key_permissions         = local.key_permissions
+  secret_permissions      = local.secret_permissions
+  certificate_permissions = local.certificate_permissions
+}
+
+resource "azurerm_key_vault_access_policy" "keyvault_access_my_account" {
+  key_vault_id = module.keyvault.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = "66a7770f-0311-433d-9673-4f1877986857"
+
+  key_permissions         = local.key_permissions
+  secret_permissions      = local.secret_permissions
+  certificate_permissions = local.certificate_permissions
+}
+
+resource "azurerm_key_vault_secret" "ssh_private_key" {
+  name         = "SSH-Private-Key"
+  value        = data.local_file.ssh_private_key.content
+  key_vault_id = module.keyvault.id
+}
+
+resource "azurerm_key_vault_secret" "ssh_public_key" {
+  name         = "SSH-Public-Key"
+  value        = data.local_file.ssh_public_key.content
+  key_vault_id = module.keyvault.id
+}
+
 module "control_node" {
   source                            = "./modules/ubuntu-vm-public-key-auth"
   ip_configuration_name             = local.control_node.ip_configuration_name
   network_interface_name            = local.control_node.network_interface_name
   os_profile_admin_username         = var.os_profile_admin_username
+  os_profile_admin_public_key_value = azurerm_key_vault_secret.ssh_public_key.value
   os_profile_computer_name          = local.control_node.os_profile_computer_name
   public_ip_name                    = local.control_node.public_ip_name
   resource_group_location           = azurerm_resource_group.public.location
@@ -29,12 +74,10 @@ module "control_node" {
   storage_os_disk_create_option     = var.storage_os_disk_create_option
   storage_os_disk_managed_disk_type = var.storage_os_disk_managed_disk_type
   storage_os_disk_name              = local.control_node.storage_os_disk_name
-  subnet_name                       = module.network.subnet_name
   vm_name                           = local.control_node.vm_name
   vm_size                           = var.vm_size
   subnet_id                         = module.network.subnet_id
   network_security_group_id         = module.network.network_security_group_id
-  os_profile_admin_public_key_path  = var.os_profile_admin_public_key_path
 }
 
 module "linux_servers" {
@@ -63,21 +106,20 @@ module "linux_servers" {
 }
 
 module "windows_servers" {
-  for_each                  = local.windows_servers
-  source                    = "./modules/windows-vm"
-  ip_configuration_name     = each.value.ip_configuration_name
-  network_interface_name    = each.value.network_interface_name
-  network_security_group_id = module.network.network_security_group_id
-  os_profile_admin_password = var.os_profile_admin_password
-  os_profile_admin_username = var.os_profile_admin_username
-  os_profile_computer_name  = each.value.os_profile_computer_name
-  public_ip_name            = each.value.public_ip_name
-  resource_group_location   = azurerm_resource_group.public.location
-  resource_group_name       = azurerm_resource_group.public.name
-  storage_os_disk_name      = each.value.storage_os_disk_name
-  subnet_id                 = module.network.subnet_id
-  vm_name                   = each.value.vm_name
-  #image_resource_group_name   = each.value.image_resource_group_name
+  for_each                    = local.windows_servers
+  source                      = "./modules/windows-vm"
+  ip_configuration_name       = each.value.ip_configuration_name
+  network_interface_name      = each.value.network_interface_name
+  network_security_group_id   = module.network.network_security_group_id
+  os_profile_admin_password   = var.os_profile_admin_password
+  os_profile_admin_username   = var.os_profile_admin_username
+  os_profile_computer_name    = each.value.os_profile_computer_name
+  public_ip_name              = each.value.public_ip_name
+  resource_group_location     = azurerm_resource_group.public.location
+  resource_group_name         = azurerm_resource_group.public.name
+  storage_os_disk_name        = each.value.storage_os_disk_name
+  subnet_id                   = module.network.subnet_id
+  vm_name                     = each.value.vm_name
   storage_image_reference_sku = each.value.storage_image_reference_sku
   vm_size                     = var.vm_size
 }
