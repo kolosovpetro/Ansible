@@ -1,4 +1,4 @@
-﻿resource "azurerm_public_ip" "agw_pip" {
+resource "azurerm_public_ip" "agw_pip" {
   name                = "pip-agwy-${var.prefix}"
   location            = azurerm_resource_group.public.location
   resource_group_name = azurerm_resource_group.public.name
@@ -10,7 +10,7 @@ resource "azurerm_subnet" "agwy_frontend_subnet" {
   name                 = "snet-agwy-front-${var.prefix}"
   resource_group_name  = azurerm_resource_group.public.name
   virtual_network_name = module.network.vnet_name
-  address_prefixes = ["10.0.3.0/24"]
+  address_prefixes     = ["10.0.3.0/24"]
 }
 
 resource "azurerm_application_gateway" "main" {

@@ -1,4 +1,4 @@
-﻿data "cloudflare_zone" "razumovsky_me_zone" {
+data "cloudflare_zone" "razumovsky_me_zone" {
   name = "razumovsky.me"
 }
 
