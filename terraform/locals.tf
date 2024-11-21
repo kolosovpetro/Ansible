@@ -13,6 +13,7 @@ locals {
     storage_os_disk_name     = "os-disk-control-node-${var.prefix}"
     vm_name                  = "vm-control-node-${var.prefix}"
     dns_name                 = "ansible.control.node"
+    private_ip_address       = "10.0.2.4"
   }
 
   linux_servers = {
@@ -25,6 +26,7 @@ locals {
       storage_os_disk_name     = "os-disk-web-server-${var.prefix}"
       vm_name                  = "vm-web-server-${var.prefix}"
       dns_name                 = "ansible.webserver"
+      private_ip_address       = "10.0.2.5"
     }
     db_server_linux = {
       indexer                  = "db_server_linux"
@@ -35,6 +37,7 @@ locals {
       storage_os_disk_name     = "os-disk-db-server-${var.prefix}"
       vm_name                  = "vm-db-server-${var.prefix}"
       dns_name                 = "ansible.dbserver"
+      private_ip_address       = "10.0.2.6"
     }
   }
 
@@ -49,6 +52,7 @@ locals {
       vm_name                     = "vm-web-server-win-${var.prefix}"
       storage_image_reference_sku = "2022-Datacenter"
       dns_name                    = "ansible.win.webserver"
+      private_ip_address          = "10.0.2.8"
     }
     db_server_windows = {
       indexer                     = "db_server_windows"
@@ -61,6 +65,7 @@ locals {
       storage_image_reference_sku = "2022-Datacenter"
       image_resource_group_name   = "rg-packer-win-2019"
       dns_name                    = "ansible.win.dbserver"
+      private_ip_address          = "10.0.2.7"
     }
   }
 
@@ -93,7 +98,7 @@ locals {
     "SetIssuers",
     "Update"
   ]
-  
+
   key_permissions = [
     "Backup",
     "Create",

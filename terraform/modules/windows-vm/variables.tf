@@ -72,6 +72,11 @@ variable "network_security_group_id" {
   description = "ID of the network security group"
 }
 
+variable "private_ip_address" {
+  type        = string
+  description = "Private IP address of the virtual machine"
+}
+
 # variable "image_resource_group_name" {
 #   type        = string
 #   description = "Name of the resource group where the image is stored"

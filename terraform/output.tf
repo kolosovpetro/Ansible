@@ -33,6 +33,10 @@ output "db_server_windows_public_ip" {
   }
 }
 
+output "application_gateway_ip" {
+  value = azurerm_public_ip.agw_pip.ip_address
+}
+
 output "os_user_name" {
   value = var.os_profile_admin_username
 }

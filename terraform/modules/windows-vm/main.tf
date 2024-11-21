@@ -13,7 +13,8 @@ resource "azurerm_network_interface" "public" {
   ip_configuration {
     name                          = var.ip_configuration_name
     subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = "Static"
+    private_ip_address            = var.private_ip_address
     public_ip_address_id          = azurerm_public_ip.public.id
   }
 }
@@ -29,11 +30,11 @@ resource "azurerm_network_interface_security_group_association" "public" {
 # }
 
 resource "azurerm_virtual_machine" "public" {
-  name                  = var.vm_name
-  location              = var.resource_group_location
-  resource_group_name   = var.resource_group_name
+  name                = var.vm_name
+  location            = var.resource_group_location
+  resource_group_name = var.resource_group_name
   network_interface_ids = [azurerm_network_interface.public.id]
-  vm_size               = var.vm_size
+  vm_size             = var.vm_size
 
   delete_os_disk_on_termination = true
 

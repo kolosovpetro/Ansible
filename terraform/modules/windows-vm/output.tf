@@ -2,6 +2,10 @@ output "public_ip_address" {
   value = azurerm_public_ip.public.ip_address
 }
 
+output "private_ip_address" {
+  value = var.private_ip_address
+}
+
 output "public_ip_id" {
   value = azurerm_public_ip.public.id
 }
@@ -16,4 +20,12 @@ output "id" {
 
 output "principal_id" {
   value = azurerm_virtual_machine.public.identity[0].principal_id
+}
+
+output "network_interface_id" {
+  value = azurerm_network_interface.public.id
+}
+
+output "ip_configuration_name" {
+  value = var.ip_configuration_name
 }
