@@ -30,21 +30,21 @@ resource "azurerm_application_gateway" "main" {
   }
 
   frontend_port {
-    name = "agwy-port-${var.prefix}"
+    name = local.frontend_port_name
     port = 80
   }
 
   frontend_ip_configuration {
-    name                 = "fipc-agwy-${var.prefix}"
+    name                 = local.frontend_ip_configuration_name
     public_ip_address_id = azurerm_public_ip.agw_pip.id
   }
 
   backend_address_pool {
-    name = "backend-pool-${var.prefix}"
+    name = local.agwy_backend_pool_name
   }
 
   backend_http_settings {
-    name                  = "http-settings-${var.prefix}"
+    name                  = local.backend_http_settings_name
     cookie_based_affinity = "Disabled"
     port                  = 80
     protocol              = "Http"
@@ -52,20 +52,28 @@ resource "azurerm_application_gateway" "main" {
   }
 
   http_listener {
-    name                           = "listener-${var.prefix}"
-    frontend_ip_configuration_name = "fipc-agwy-${var.prefix}"
-    frontend_port_name             = "agwy-port-${var.prefix}"
+    name                           = local.http_listener_name
+    frontend_ip_configuration_name = local.frontend_ip_configuration_name
+    frontend_port_name             = local.frontend_port_name
     protocol                       = "Http"
   }
 
   request_routing_rule {
     name                       = "rule-${var.prefix}"
     rule_type                  = "Basic"
-    http_listener_name         = "listener-${var.prefix}"
-    backend_address_pool_name  = "backend-pool-${var.prefix}"
-    backend_http_settings_name = "http-settings-${var.prefix}"
+    http_listener_name         = local.http_listener_name
+    backend_address_pool_name  = local.agwy_backend_pool_name
+    backend_http_settings_name = local.backend_http_settings_name
     priority                   = 1
   }
+}
+
+locals {
+  agwy_backend_pool_name         = "backend-pool-${var.prefix}"
+  http_listener_name             = "listener-${var.prefix}"
+  backend_http_settings_name     = "http-settings-${var.prefix}"
+  frontend_ip_configuration_name = "fipc-agwy-${var.prefix}"
+  frontend_port_name             = "agwy-port-${var.prefix}"
 }
 
 resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc" {
