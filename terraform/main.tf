@@ -94,7 +94,7 @@ module "storage" {
   ]
 }
 
-module "custom_script_extension" {
+module "configure_windows_servers_winrm_extension" {
   for_each                              = local.windows_servers
   source                                = "./modules/custom-script-extension"
   custom_script_extension_absolute_path = "E:\\RiderProjects\\09_ANSIBLE\\ansible-control-node\\terraform\\scripts\\Configure-Ansible-Host.ps1"
@@ -109,6 +109,23 @@ module "custom_script_extension" {
     module.windows_servers
   ]
 }
+
+# module "install_iis_extension" {
+#   for_each                              = local.windows_servers
+#   source                                = "./modules/custom-script-extension"
+#   custom_script_extension_absolute_path = "E:\\RiderProjects\\09_ANSIBLE\\ansible-control-node\\terraform\\scripts\\Install-IIS.ps1"
+#   custom_script_extension_file_name     = "Install-IIS.ps1"
+#   extension_name                        = "InstallIIS-${each.key}"
+#   storage_account_name                  = module.storage.storage_account_name
+#   storage_container_name                = module.storage.storage_container_name
+#   virtual_machine_id                    = module.windows_servers[each.key].id
+# 
+#   depends_on = [
+#     module.storage,
+#     module.windows_servers,
+#     module.configure_windows_servers_winrm_extension
+#   ]
+# }
 
 module "control_node_install_ansible_extension" {
   source                                = "./modules/linux-custom-script-extension"
