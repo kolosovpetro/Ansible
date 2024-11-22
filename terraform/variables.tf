@@ -87,3 +87,8 @@ variable "cloudflare_api_token" {
   type        = string
   description = "Cloudflare API token"
 }
+
+variable "certificate_password" {
+  type        = string
+  description = "Password for the SSL certificate"
+}

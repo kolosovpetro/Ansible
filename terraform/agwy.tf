@@ -10,7 +10,7 @@ resource "azurerm_subnet" "snet_agwy_frontend" {
   name                 = local.network_settings.snet_agwy_frontend_name
   resource_group_name  = azurerm_resource_group.public.name
   virtual_network_name = module.network.vnet_name
-  address_prefixes = ["10.0.0.128/26"]
+  address_prefixes     = ["10.0.0.128/26"]
 }
 
 resource "azurerm_application_gateway" "main" {
@@ -31,7 +31,7 @@ resource "azurerm_application_gateway" "main" {
 
   frontend_port {
     name = local.frontend_port_name
-    port = 80
+    port = 443
   }
 
   frontend_ip_configuration {
@@ -55,7 +55,14 @@ resource "azurerm_application_gateway" "main" {
     name                           = local.http_listener_name
     frontend_ip_configuration_name = local.frontend_ip_configuration_name
     frontend_port_name             = local.frontend_port_name
-    protocol                       = "Http"
+    protocol                       = "Https"
+    ssl_certificate_name           = local.ssl_certificate_name
+  }
+  
+  ssl_certificate {
+    name     = local.ssl_certificate_name
+    data     = filebase64("${path.module}/${local.ssl_certificate_name}")
+    password = var.certificate_password
   }
 
   request_routing_rule {
@@ -74,6 +81,7 @@ locals {
   backend_http_settings_name     = "http-settings-${var.prefix}"
   frontend_ip_configuration_name = "fipc-agwy-${var.prefix}"
   frontend_port_name             = "agwy-port-${var.prefix}"
+  ssl_certificate_name           = "agwy.test.razumovsky.me.pfx"
 }
 
 resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc" {

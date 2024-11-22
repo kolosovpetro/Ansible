@@ -8,3 +8,6 @@
 # SSH keys
 id_rsa
 *.pub
+
+# Certs
+*.pfx
