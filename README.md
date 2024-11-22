@@ -22,6 +22,7 @@ Gameplay with Ansible control node and multiple managed nodes.
 - ansible.webserver.razumovsky.me
 - ansible.win.dbserver.razumovsky.me
 - ansible.win.webserver.razumovsky.me
+- https://agwy.test.razumovsky.me
 
 ## SSH configuration for Linux managed nodes
 

@@ -34,7 +34,11 @@ output "db_server_windows_public_ip" {
 }
 
 output "application_gateway_ip" {
-  value = azurerm_public_ip.agw_pip.ip_address
+  value = module.application_gateway.agwy_public_ip_address
+}
+
+output "application_gateway_url" {
+  value = "https://agwy.test.razumovsky.me"
 }
 
 output "os_user_name" {

@@ -73,6 +73,19 @@ locals {
     }
   }
 
+  application_gateway_settings = {
+    agwy_name                      = "agwy-${var.prefix}"
+    agwy_public_ip_name            = "pip-agwy-${var.prefix}"
+    gateway_ip_configuration_name  = "ipc-agwy-${var.prefix}"
+    agwy_backend_pool_name         = "backend-pool-${var.prefix}"
+    http_listener_name             = "listener-${var.prefix}"
+    backend_http_settings_name     = "http-settings-${var.prefix}"
+    frontend_ip_configuration_name = "fipc-agwy-${var.prefix}"
+    frontend_port_name             = "agwy-port-${var.prefix}"
+    ssl_certificate_name           = "agwy.test.razumovsky.me.pfx"
+    request_routing_rule_name      = "rule-${var.prefix}"
+  }
+
   secret_permissions = [
     "Get",
     "List",

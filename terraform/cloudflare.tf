@@ -43,7 +43,7 @@ resource "cloudflare_record" "windows_servers_dns" {
 resource "cloudflare_record" "agwy_dns" {
   zone_id = data.cloudflare_zone.razumovsky_me_zone.id
   name    = "agwy.test"
-  content = azurerm_public_ip.agw_pip.ip_address
+  content = module.application_gateway.agwy_public_ip_address
   type    = "A"
   proxied = false
 }
