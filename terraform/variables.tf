@@ -13,36 +13,6 @@ variable "resource_group_location" {
   description = "Location of the resource group."
 }
 
-variable "vnet_name" {
-  type        = string
-  description = "Name of the virtual network"
-}
-
-variable "subnet_name" {
-  type        = string
-  description = "Name of the subnet"
-}
-
-variable "network_interface_name" {
-  type        = string
-  description = "Name of the network interface"
-}
-
-variable "ip_configuration_name" {
-  type        = string
-  description = "Name of the IP configuration"
-}
-
-variable "nsg_name" {
-  type        = string
-  description = "Name of the network security group"
-}
-
-variable "vm_name" {
-  type        = string
-  description = "Name of the virtual machine"
-}
-
 variable "vm_size" {
   type        = string
   description = "The size of the virtual machine."
@@ -66,11 +36,6 @@ variable "storage_image_reference_sku" {
 variable "storage_image_reference_version" {
   type        = string
   description = "Specifies the version of the platform image or marketplace image used to create the virtual machine."
-}
-
-variable "storage_os_disk_name" {
-  type        = string
-  description = "The name of the OS disk."
 }
 
 variable "storage_os_disk_caching" {

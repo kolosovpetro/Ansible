@@ -6,11 +6,11 @@ resource "azurerm_public_ip" "agw_pip" {
   sku                 = "Standard"
 }
 
-resource "azurerm_subnet" "agwy_frontend_subnet" {
-  name                 = "snet-agwy-front-${var.prefix}"
+resource "azurerm_subnet" "snet_agwy_frontend" {
+  name                 = local.network_settings.snet_agwy_frontend_name
   resource_group_name  = azurerm_resource_group.public.name
   virtual_network_name = module.network.vnet_name
-  address_prefixes     = ["10.0.3.0/24"]
+  address_prefixes = ["10.0.0.128/26"]
 }
 
 resource "azurerm_application_gateway" "main" {
@@ -26,7 +26,7 @@ resource "azurerm_application_gateway" "main" {
 
   gateway_ip_configuration {
     name      = "ipc-agwy-${var.prefix}"
-    subnet_id = azurerm_subnet.agwy_frontend_subnet.id
+    subnet_id = azurerm_subnet.snet_agwy_frontend.id
   }
 
   frontend_port {

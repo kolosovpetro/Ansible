@@ -1,15 +1,16 @@
 resource "azurerm_resource_group" "public" {
   location = var.resource_group_location
-  name     = local.rg_name
+  name     = local.resource_group_name
 }
 
 module "network" {
   source                  = "./modules/network"
-  nsg_name                = local.nsg_name
+  vnet_name               = local.network_settings.vnet_name
+  nsg_name                = local.network_settings.nsg_name
   resource_group_location = azurerm_resource_group.public.location
   resource_group_name     = azurerm_resource_group.public.name
-  subnet_name             = local.subnet_name
-  vnet_name               = local.vnet_name
+  snet_windows_name       = local.network_settings.snet_windows_name
+  snet_linux_name         = local.network_settings.snet_linux_name
 }
 
 module "control_node" {
@@ -32,7 +33,7 @@ module "control_node" {
   storage_os_disk_name              = local.control_node.storage_os_disk_name
   vm_name                           = local.control_node.vm_name
   vm_size                           = var.vm_size
-  subnet_id                         = module.network.subnet_id
+  subnet_id                         = module.network.subnet_linux_servers_id
   network_security_group_id         = module.network.network_security_group_id
 }
 
@@ -56,7 +57,7 @@ module "linux_servers" {
   storage_os_disk_name              = each.value.storage_os_disk_name
   vm_name                           = each.value.vm_name
   vm_size                           = var.vm_size
-  subnet_id                         = module.network.subnet_id
+  subnet_id                         = module.network.subnet_linux_servers_id
   network_security_group_id         = module.network.network_security_group_id
   os_profile_admin_public_key_value = file(var.os_profile_admin_public_key_path)
 }
@@ -66,7 +67,6 @@ module "windows_servers" {
   source                      = "./modules/windows-vm"
   ip_configuration_name       = each.value.ip_configuration_name
   network_interface_name      = each.value.network_interface_name
-  network_security_group_id   = module.network.network_security_group_id
   os_profile_admin_password   = var.os_profile_admin_password
   os_profile_admin_username   = var.os_profile_admin_username
   os_profile_computer_name    = each.value.os_profile_computer_name
@@ -74,11 +74,12 @@ module "windows_servers" {
   resource_group_location     = azurerm_resource_group.public.location
   resource_group_name         = azurerm_resource_group.public.name
   storage_os_disk_name        = each.value.storage_os_disk_name
-  subnet_id                   = module.network.subnet_id
   vm_name                     = each.value.vm_name
   storage_image_reference_sku = each.value.storage_image_reference_sku
   vm_size                     = var.vm_size
   private_ip_address          = each.value.private_ip_address
+  subnet_id                   = module.network.subnet_windows_servers_id
+  network_security_group_id   = module.network.network_security_group_id
 }
 
 module "storage" {

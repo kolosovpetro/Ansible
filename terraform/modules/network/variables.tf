@@ -13,7 +13,7 @@ variable "vnet_name" {
   description = "Name of the virtual network"
 }
 
-variable "subnet_name" {
+variable "snet_windows_name" {
   type        = string
   description = "Name of the subnet"
 }
@@ -21,4 +21,9 @@ variable "subnet_name" {
 variable "nsg_name" {
   type        = string
   description = "Name of the network security group"
+}
+
+variable "snet_linux_name" {
+  type        = string
+  description = "Name of the subnet"
 }

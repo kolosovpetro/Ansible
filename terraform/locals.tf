@@ -1,8 +1,12 @@
 locals {
-  rg_name     = "${var.resource_group_name}-${var.prefix}"
-  nsg_name    = "${var.nsg_name}-${var.prefix}"
-  subnet_name = "${var.subnet_name}-${var.prefix}"
-  vnet_name   = "${var.vnet_name}-${var.prefix}"
+  resource_group_name = "${var.resource_group_name}-${var.prefix}"
+  network_settings = {
+    nsg_name                = "nsg-ansible-${var.prefix}"
+    vnet_name               = "vnet-ansible-${var.prefix}"
+    snet_agwy_frontend_name = "snet-agwy-frontend-${var.prefix}"
+    snet_linux_name         = "snet-linux-servers-${var.prefix}"
+    snet_windows_name       = "snet-windows-servers-${var.prefix}"
+  }
 
   control_node = {
     indexer                  = "control_node"
@@ -13,7 +17,7 @@ locals {
     storage_os_disk_name     = "os-disk-control-node-${var.prefix}"
     vm_name                  = "vm-control-node-${var.prefix}"
     dns_name                 = "ansible.control.node"
-    private_ip_address       = "10.0.2.4"
+    private_ip_address       = "10.0.0.100"
   }
 
   linux_servers = {
@@ -26,7 +30,7 @@ locals {
       storage_os_disk_name     = "os-disk-web-server-${var.prefix}"
       vm_name                  = "vm-web-server-${var.prefix}"
       dns_name                 = "ansible.webserver"
-      private_ip_address       = "10.0.2.5"
+      private_ip_address       = "10.0.0.101"
     }
     db_server_linux = {
       indexer                  = "db_server_linux"
@@ -37,7 +41,7 @@ locals {
       storage_os_disk_name     = "os-disk-db-server-${var.prefix}"
       vm_name                  = "vm-db-server-${var.prefix}"
       dns_name                 = "ansible.dbserver"
-      private_ip_address       = "10.0.2.6"
+      private_ip_address       = "10.0.0.102"
     }
   }
 
@@ -52,7 +56,7 @@ locals {
       vm_name                     = "vm-web-server-win-${var.prefix}"
       storage_image_reference_sku = "2022-Datacenter"
       dns_name                    = "ansible.win.webserver"
-      private_ip_address          = "10.0.2.8"
+      private_ip_address          = "10.0.0.10"
     }
     db_server_windows = {
       indexer                     = "db_server_windows"
@@ -65,7 +69,7 @@ locals {
       storage_image_reference_sku = "2022-Datacenter"
       image_resource_group_name   = "rg-packer-win-2019"
       dns_name                    = "ansible.win.dbserver"
-      private_ip_address          = "10.0.2.7"
+      private_ip_address          = "10.0.0.11"
     }
   }
 
