@@ -101,3 +101,8 @@ variable "ssl_certificate_password" {
   type        = string
   description = "Password for the SSL certificate"
 }
+
+variable "dns_prefix" {
+  type        = string
+  description = "DNS prefix for the public IP address"
+}

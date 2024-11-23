@@ -80,6 +80,7 @@ From control node execute:
 - https://github.com/AlbanAndrieu/ansible-windows/blob/master/files/ConfigureRemotingForAnsible.ps1
 - Set-ExecutionPolicy -ExecutionPolicy Bypass
 - pip install "pywinrm>=0.3.0"
+- Application gateway quizlet: https://quizlet.com/pl/975398961/azure-application-gateway-flash-cards/
 
 ## Provision infrastructure (Terraform)
 
