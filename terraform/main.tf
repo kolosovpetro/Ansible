@@ -97,14 +97,14 @@ module "storage" {
 }
 
 module "configure_windows_servers_winrm_extension" {
-  for_each                              = local.windows_servers
+  for_each                              = module.windows_servers
   source                                = "./modules/custom-script-extension"
   custom_script_extension_absolute_path = "E:\\RiderProjects\\09_ANSIBLE\\ansible-control-node\\terraform\\scripts\\Configure-Ansible-Host.ps1"
   custom_script_extension_file_name     = "Configure-Ansible-Host.ps1"
   extension_name                        = "ConfigureAnsibleHost"
   storage_account_name                  = module.storage.storage_account_name
   storage_container_name                = module.storage.storage_container_name
-  virtual_machine_id                    = module.windows_servers[each.key].id
+  virtual_machine_id                    = each.value.id
 
   depends_on = [
     module.storage,
@@ -120,6 +120,22 @@ module "control_node_install_ansible_extension" {
   storage_account_name                  = module.storage.storage_account_name
   storage_container_name                = module.storage.storage_container_name
   virtual_machine_id                    = module.control_node.id
+
+  depends_on = [
+    module.storage,
+    module.windows_servers
+  ]
+}
+
+module "managed_nodes_install_nginx" {
+  for_each                              = module.linux_servers
+  source                                = "./modules/linux-custom-script-extension"
+  custom_script_extension_absolute_path = "E:\\RiderProjects\\09_ANSIBLE\\ansible-control-node\\scripts\\install_nginx.sh"
+  custom_script_extension_file_name     = "install_nginx_${each.key}.sh"
+  extension_name                        = "InstallNginx_${each.key}"
+  storage_account_name                  = module.storage.storage_account_name
+  storage_container_name                = module.storage.storage_container_name
+  virtual_machine_id                    = each.value.id
 
   depends_on = [
     module.storage,
