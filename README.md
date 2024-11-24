@@ -17,22 +17,21 @@ Gameplay with Ansible control node and multiple managed nodes.
 
 ## DNS
 
-- ansible.control.node.razumovsky.me
-- ansible.dbserver.razumovsky.me
-- ansible.webserver.razumovsky.me
-- ansible.win.dbserver.razumovsky.me
-- ansible.win.webserver.razumovsky.me
-- https://agwy-test.razumovsky.me
+- http://ansible-control-node.razumovsky.me
+- http://ansible-dbserver.razumovsky.me
+- http://ansible-webserver.razumovsky.me
+- http://ansible-win-dbserver.razumovsky.me
+- http://ansible-win-webserver.razumovsky.me
 
 ## SSH configuration for Linux managed nodes
 
 From control node execute:
 
 - Update `known_hosts` file by removing the old entries (if necessary)
-- ssh razumovsky_r@ansible.control.node.razumovsky.me
+- ssh razumovsky_r@ansible-control-node.razumovsky.me
 - ssh-keygen
-- ssh-copy-id -i ~/.ssh/id_rsa razumovsky_r@ansible.dbserver.razumovsky.me
-- ssh-copy-id -i ~/.ssh/id_rsa razumovsky_r@ansible.webserver.razumovsky.me
+- ssh-copy-id -i ~/.ssh/id_rsa razumovsky_r@ansible-dbserver.razumovsky.me
+- ssh-copy-id -i ~/.ssh/id_rsa razumovsky_r@ansible-webserver.razumovsky.me
 
 ## Control node initial configuration (Linux)
 
@@ -69,9 +68,9 @@ From control node execute:
 
 ## SSH connection commands (Linux managed nodes)
 
-- ssh razumovsky_r@ansible.control.node.razumovsky.me
-- ssh razumovsky_r@ansible.dbserver.razumovsky.me
-- ssh razumovsky_r@ansible.webserver.razumovsky.me
+- ssh razumovsky_r@ansible-control-node.razumovsky.me
+- ssh razumovsky_r@ansible-dbserver.razumovsky.me
+- ssh razumovsky_r@ansible-webserver.razumovsky.me
 
 ## Ansible for Windows Docs
 

@@ -16,7 +16,7 @@ locals {
     os_profile_computer_name = "control-node"
     storage_os_disk_name     = "os-disk-control-node-${var.prefix}"
     vm_name                  = "vm-control-node-${var.prefix}"
-    dns_name                 = "ansible.control.node"
+    sub_domain                 = "ansible-control-node"
     private_ip_address       = "10.0.0.100"
   }
 
@@ -29,7 +29,7 @@ locals {
       os_profile_computer_name = "web-server"
       storage_os_disk_name     = "os-disk-web-server-${var.prefix}"
       vm_name                  = "vm-web-server-${var.prefix}"
-      dns_name                 = "ansible.webserver"
+      sub_domain                 = "ansible-webserver"
       private_ip_address       = "10.0.0.101"
     }
     db_server_linux = {
@@ -40,7 +40,7 @@ locals {
       os_profile_computer_name = "db-server"
       storage_os_disk_name     = "os-disk-db-server-${var.prefix}"
       vm_name                  = "vm-db-server-${var.prefix}"
-      dns_name                 = "ansible.dbserver"
+      sub_domain                 = "ansible-dbserver"
       private_ip_address       = "10.0.0.102"
     }
   }
@@ -55,7 +55,7 @@ locals {
       storage_os_disk_name        = "os-disk-web-server-windows-${var.prefix}"
       vm_name                     = "vm-web-server-win-${var.prefix}"
       storage_image_reference_sku = "2022-Datacenter"
-      dns_name                    = "ansible.win.webserver"
+      sub_domain                    = "ansible-win-webserver"
       private_ip_address          = "10.0.0.10"
     }
     db_server_windows = {
@@ -68,7 +68,7 @@ locals {
       vm_name                     = "vm-db-server-win-${var.prefix}"
       storage_image_reference_sku = "2022-Datacenter"
       image_resource_group_name   = "rg-packer-win-2019"
-      dns_name                    = "ansible.win.dbserver"
+      sub_domain                    = "ansible-win-dbserver"
       private_ip_address          = "10.0.0.11"
     }
   }
@@ -82,7 +82,7 @@ locals {
     backend_http_settings_name     = "http-settings-${var.prefix}"
     frontend_ip_configuration_name = "fipc-agwy-${var.prefix}"
     frontend_port_name             = "agwy-port-${var.prefix}"
-    ssl_certificate_name           = "agwy.test.razumovsky.me.pfx"
+    ssl_certificate_name           = "razumovsky.me.pfx"
     request_routing_rule_name      = "rule-${var.prefix}"
   }
 

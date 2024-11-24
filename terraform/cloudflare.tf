@@ -4,7 +4,7 @@ data "cloudflare_zone" "razumovsky_me_zone" {
 
 resource "cloudflare_record" "control_node_dns" {
   zone_id = data.cloudflare_zone.razumovsky_me_zone.id
-  name    = local.control_node.dns_name
+  name    = local.control_node.sub_domain
   content = module.control_node.public_ip_address
   type    = "A"
   proxied = false
@@ -17,7 +17,7 @@ resource "cloudflare_record" "control_node_dns" {
 resource "cloudflare_record" "linux_servers_dns" {
   for_each = local.linux_servers
   zone_id  = data.cloudflare_zone.razumovsky_me_zone.id
-  name     = each.value.dns_name
+  name     = each.value.sub_domain
   content  = module.linux_servers[each.key].public_ip_address
   type     = "A"
   proxied  = false
@@ -30,7 +30,7 @@ resource "cloudflare_record" "linux_servers_dns" {
 resource "cloudflare_record" "windows_servers_dns" {
   for_each = local.windows_servers
   zone_id  = data.cloudflare_zone.razumovsky_me_zone.id
-  name     = each.value.dns_name
+  name     = each.value.sub_domain
   content  = module.windows_servers[each.key].public_ip_address
   type     = "A"
   proxied  = false
