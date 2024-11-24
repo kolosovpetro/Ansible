@@ -12,7 +12,7 @@ echo "Python and PIP installed successfully"
 
 echo "Installing Ansible..."
 
-sudo apt update
+sudo apt update -y
 sudo apt install software-properties-common
 sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt install ansible -y
@@ -20,3 +20,10 @@ sudo apt install ansible -y
 ansible --version
 
 echo "Ansible installed successfully"
+
+echo "Installing Nginx..."
+
+sudo apt update -y
+sudo apt install -y nginx build-essential
+
+echo "Nginx installed successfully"

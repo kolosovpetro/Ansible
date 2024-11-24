@@ -41,7 +41,7 @@ variable "gateway_ip_configuration_name" {
   description = "Name of the gateway IP configuration for the Application Gateway."
 }
 
-variable "frontend_port_name" {
+variable "frontend_https_port_name" {
   type        = string
   description = "Name of the frontend port configuration for the Application Gateway."
 }

@@ -30,7 +30,7 @@ resource "azurerm_application_gateway" "main" {
   }
 
   frontend_port {
-    name = var.frontend_port_name
+    name = var.frontend_https_port_name
     port = 443
   }
 
@@ -54,7 +54,7 @@ resource "azurerm_application_gateway" "main" {
   http_listener {
     name                           = var.http_listener_name
     frontend_ip_configuration_name = var.frontend_ip_configuration_name
-    frontend_port_name             = var.frontend_port_name
+    frontend_port_name             = var.frontend_https_port_name
     protocol                       = "Https"
     ssl_certificate_name           = var.ssl_certificate_name
   }

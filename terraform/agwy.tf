@@ -5,7 +5,7 @@ module "application_gateway" {
   agwy_public_ip_name            = local.application_gateway_settings.agwy_public_ip_name
   backend_http_settings_name     = local.application_gateway_settings.backend_http_settings_name
   frontend_ip_configuration_name = local.application_gateway_settings.frontend_ip_configuration_name
-  frontend_port_name             = local.application_gateway_settings.frontend_port_name
+  frontend_https_port_name             = local.application_gateway_settings.frontend_port_name
   gateway_ip_configuration_name  = local.application_gateway_settings.gateway_ip_configuration_name
   http_listener_name             = local.application_gateway_settings.http_listener_name
   location                       = azurerm_resource_group.public.location
