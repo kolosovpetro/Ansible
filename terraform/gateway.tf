@@ -14,14 +14,12 @@ resource "azurerm_application_gateway" "app_gateway" {
     subnet_id = azurerm_subnet.gateway_subnet.id
   }
 
-  frontend_port {
-    name = local.https_port_name
-    port = 443
-  }
-
-  frontend_port {
-    name = local.http_port_name
-    port = 80
+  dynamic "frontend_port" {
+    for_each = local.frontend_ports
+    content {
+      name = frontend_port.value.name
+      port = frontend_port.value.port
+    }
   }
 
   frontend_ip_configuration {

@@ -11,4 +11,15 @@
   backend_pool_name              = "backend-pool-dev"
   http_listener_name             = "http-listener-dev"
   routing_rule_name              = "https-rule-dev"
+
+  frontend_ports = [
+    {
+      name = local.http_port_name
+      port = 80
+    },
+    {
+      name = local.https_port_name
+      port = 443
+    }
+  ]
 }
