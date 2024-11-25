@@ -16,7 +16,7 @@ locals {
     os_profile_computer_name = "control-node"
     storage_os_disk_name     = "os-disk-control-node-${var.prefix}"
     vm_name                  = "vm-control-node-${var.prefix}"
-    sub_domain                 = "ansible-control-node"
+    sub_domain               = "ansible-control-node"
     private_ip_address       = "10.0.0.100"
   }
 
@@ -29,7 +29,7 @@ locals {
       os_profile_computer_name = "web-server"
       storage_os_disk_name     = "os-disk-web-server-${var.prefix}"
       vm_name                  = "vm-web-server-${var.prefix}"
-      sub_domain                 = "ansible-webserver"
+      sub_domain               = "ansible-webserver"
       private_ip_address       = "10.0.0.101"
     }
     db_server_linux = {
@@ -40,7 +40,7 @@ locals {
       os_profile_computer_name = "db-server"
       storage_os_disk_name     = "os-disk-db-server-${var.prefix}"
       vm_name                  = "vm-db-server-${var.prefix}"
-      sub_domain                 = "ansible-dbserver"
+      sub_domain               = "ansible-dbserver"
       private_ip_address       = "10.0.0.102"
     }
   }

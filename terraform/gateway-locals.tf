@@ -1,4 +1,4 @@
-﻿locals {
+locals {
   https_port_name                = "front-port-443"
   http_port_name                 = "front-port-80"
   frontend_ip_configuration_name = "front-ip-config-${var.prefix}"
@@ -13,10 +13,12 @@
   https_listener_dev             = "https-listener-dev"
   https_listener_qa              = "https-listener-qa"
 
-  http_listener_dev     = "http-listener-dev"
-  http_listener_qa      = "http-listener-qa"
-  routing_rule_dev_name = "https-rule-dev"
-  routing_rule_qa_name  = "https-rule-qa"
+  http_listener_dev           = "http-listener-dev"
+  http_listener_qa            = "http-listener-qa"
+  https_routing_rule_dev_name = "https-rule-dev"
+  https_routing_rule_qa_name  = "https-rule-qa"
+  http_routing_rule_dev_name  = "http-rule-dev"
+  http_routing_rule_qa_name   = "http-rule-qa"
 
   frontend_ports = [
     {
@@ -62,16 +64,33 @@
 
   https_routing_rules = [
     {
-      name                      = local.routing_rule_dev_name
+      name                      = local.https_routing_rule_dev_name
       http_listener_name        = local.https_listener_dev
       backend_address_pool_name = local.backend_pool_dev
       priority                  = 10
     },
     {
-      name                      = local.routing_rule_qa_name
+      name                      = local.https_routing_rule_qa_name
       http_listener_name        = local.https_listener_qa
       backend_address_pool_name = local.backend_pool_qa
       priority                  = 20
+    }
+  ]
+
+  http_routing_rules = [
+    {
+      name                        = local.http_routing_rule_dev_name
+      http_listener_name          = local.http_listener_dev
+      target_listener_name        = local.https_listener_dev
+      redirect_configuration_name = "http-https-redirect-dev"
+      priority                    = 30
+    },
+    {
+      name                        = local.http_routing_rule_qa_name
+      http_listener_name          = local.http_listener_qa
+      target_listener_name        = local.https_listener_qa
+      redirect_configuration_name = "http-https-redirect-qa"
+      priority                    = 40
     }
   ]
 }

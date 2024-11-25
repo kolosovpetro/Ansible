@@ -9,6 +9,12 @@ resource "azurerm_application_gateway" "app_gateway" {
     capacity = 2
   }
 
+  ssl_certificate {
+    name     = var.ssl_certificate_name
+    data     = filebase64(var.ssl_certificate_path)
+    password = var.ssl_certificate_password
+  }
+
   gateway_ip_configuration {
     name      = local.gateway_ip_configuration_name
     subnet_id = azurerm_subnet.gateway_subnet.id
@@ -65,12 +71,6 @@ resource "azurerm_application_gateway" "app_gateway" {
     }
   }
 
-  ssl_certificate {
-    name     = var.ssl_certificate_name
-    data = filebase64(var.ssl_certificate_path)
-    password = var.ssl_certificate_password
-  }
-
   dynamic "request_routing_rule" {
     for_each = local.https_routing_rules
     content {
@@ -80,6 +80,28 @@ resource "azurerm_application_gateway" "app_gateway" {
       backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
       backend_http_settings_name = local.http_settings_name
       priority                   = request_routing_rule.value.priority
+    }
+  }
+
+  dynamic "request_routing_rule" {
+    for_each = local.http_routing_rules
+    content {
+      name                        = request_routing_rule.value.name
+      http_listener_name          = request_routing_rule.value.http_listener_name
+      rule_type                   = "Basic"
+      priority                    = request_routing_rule.value.priority
+      redirect_configuration_name = request_routing_rule.value.redirect_configuration_name
+    }
+  }
+
+  dynamic "redirect_configuration" {
+    for_each = local.http_routing_rules
+    content {
+      name                 = redirect_configuration.value.redirect_configuration_name
+      target_listener_name = redirect_configuration.value.target_listener_name
+      redirect_type        = "Permanent"
+      include_path         = true
+      include_query_string = true
     }
   }
 }
