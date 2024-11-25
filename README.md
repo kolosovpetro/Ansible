@@ -2,6 +2,32 @@
 
 Gameplay with Ansible control node and multiple managed nodes.
 
+## Application gateway components
+
+- **Frontend IP Configuration** — Defines the private or public IP address that receives requests to the application
+  gateway.
+
+- **Frontend Port** — Defines a port that accepts incoming requests to the application gateway.
+
+- **Backend Pool** — A list of IP addresses or FQDNs where traffic is forwarded.
+
+- **HTTP Settings** — Defines how the application gateway sends incoming traffic to backend servers by setting up a
+  protocol, backend port, and timeout interval.
+
+- **HTTP Listener** — Binds the **Frontend IP Configuration**, **Frontend Port**, and protocol together to listen for
+  incoming requests.
+
+- **SSL Certificate** — Used in HTTPS listeners to secure communication between the gateway and clients by enabling
+  traffic encryption.
+
+- **Routing Rules** — Binds **HTTP Listener**, **Backend Pool**, and **HTTP Settings** to define how traffic is routed
+  to backend servers.
+
+- **Health Probe** — Ensures that traffic is delivered only to healthy backend servers.
+
+- **Gateway IP Configuration** — Binds an application gateway to a specific subnet, ensuring proper internal
+  communication.
+
 ## Steps to configure communication
 
 - Deploy virtual network
