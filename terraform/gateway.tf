@@ -27,8 +27,11 @@ resource "azurerm_application_gateway" "app_gateway" {
     public_ip_address_id = azurerm_public_ip.gateway_public_ip.id
   }
 
-  backend_address_pool {
-    name = local.backend_pool_name
+  dynamic "backend_address_pool" {
+    for_each = local.backend_pools
+    content {
+      name = backend_address_pool.value.name
+    }
   }
 
   backend_http_settings {
@@ -58,15 +61,27 @@ resource "azurerm_application_gateway" "app_gateway" {
     name                       = local.routing_rule_name
     rule_type                  = "Basic"
     http_listener_name         = local.http_listener_name
-    backend_address_pool_name  = local.backend_pool_name
+    backend_address_pool_name  = local.backend_pool_dev
     backend_http_settings_name = local.http_settings_name
     priority                   = 1
   }
+}
+
+data "azurerm_application_gateway" "example" {
+  name                = azurerm_application_gateway.app_gateway.name
+  resource_group_name = azurerm_resource_group.public.name
 }
 
 resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc" {
   for_each                = module.windows_servers
   network_interface_id    = each.value.network_interface_id
   ip_configuration_name   = each.value.ip_configuration_name
-  backend_address_pool_id = one(azurerm_application_gateway.app_gateway.backend_address_pool).id
+  backend_address_pool_id = data.azurerm_application_gateway.example.backend_address_pool[0].id
+}
+
+resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "qa_backend_pool" {
+  for_each                = module.linux_servers
+  network_interface_id    = each.value.network_interface_id
+  ip_configuration_name   = each.value.ip_configuration_name
+  backend_address_pool_id = data.azurerm_application_gateway.example.backend_address_pool[1].id
 }
