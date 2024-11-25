@@ -54,6 +54,17 @@ resource "azurerm_application_gateway" "app_gateway" {
     }
   }
 
+  dynamic "http_listener" {
+    for_each = local.http_listeners
+    content {
+      name                           = http_listener.value.name
+      frontend_ip_configuration_name = local.frontend_ip_configuration_name
+      frontend_port_name             = local.http_port_name
+      protocol                       = "Http"
+      host_name                      = http_listener.value.host_name
+    }
+  }
+
   ssl_certificate {
     name     = var.ssl_certificate_name
     data = filebase64(var.ssl_certificate_path)
