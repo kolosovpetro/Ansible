@@ -60,13 +60,16 @@ resource "azurerm_application_gateway" "app_gateway" {
     password = var.ssl_certificate_password
   }
 
-  request_routing_rule {
-    name                       = local.routing_rule_name
-    rule_type                  = "Basic"
-    http_listener_name         = local.https_listeners[0].name
-    backend_address_pool_name  = local.backend_pool_dev
-    backend_http_settings_name = local.http_settings_name
-    priority                   = 1
+  dynamic "request_routing_rule" {
+    for_each = local.https_routing_rules
+    content {
+      name                       = request_routing_rule.value.name
+      rule_type                  = "Basic"
+      http_listener_name         = request_routing_rule.value.http_listener_name
+      backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
+      backend_http_settings_name = local.http_settings_name
+      priority                   = request_routing_rule.value.priority
+    }
   }
 }
 

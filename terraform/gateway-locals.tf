@@ -10,8 +10,10 @@
   custom_cloudflare_qa_fqdn      = "agwy-vm-qa.${local.domain_name}"
   backend_pool_dev               = "backend-pool-dev"
   backend_pool_qa                = "backend-pool-qa"
-  http_listener_name             = "http-listener-dev"
-  routing_rule_name              = "https-rule-dev"
+  https_listener_dev             = "https-listener-dev"
+  https_listener_qa              = "https-listener-qa"
+  routing_rule_dev_name          = "https-rule-dev"
+  routing_rule_qa_name           = "https-rule-qa"
 
   frontend_ports = [
     {
@@ -32,15 +34,30 @@
       name = local.backend_pool_qa
     }
   ]
-  
+
   https_listeners = [
     {
-      name      = "https-listener-dev"
+      name      = local.https_listener_dev
       host_name = local.custom_cloudflare_dev_fqdn
     },
     {
-      name      = "https-listener-qa"
+      name      = local.https_listener_qa
       host_name = local.custom_cloudflare_qa_fqdn
+    }
+  ]
+
+  https_routing_rules = [
+    {
+      name                      = local.routing_rule_dev_name
+      http_listener_name        = local.https_listener_dev
+      backend_address_pool_name = local.backend_pool_dev
+      priority                  = 10
+    },
+    {
+      name                      = local.routing_rule_qa_name
+      http_listener_name        = local.https_listener_qa
+      backend_address_pool_name = local.backend_pool_qa
+      priority                  = 20
     }
   ]
 }
