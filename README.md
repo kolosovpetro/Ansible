@@ -1,6 +1,8 @@
 # Azure Application Gateway with Ansible managed backend pools
 
-Gameplay with Ansible control node and multiple managed nodes.
+Windows and Linux backend servers under Azure Application gateway, provisioned
+using Terraform. Ansible is used to manage backend servers. DNS records are created
+using Cloudflare Terraform provider.
 
 ## Azure Application gateway diagram
 
