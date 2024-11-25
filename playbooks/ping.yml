@@ -1,6 +1,6 @@
 ---
 - name: 'Ping servers'
-  hosts: all
+  hosts: db_servers:web_servers
   become: yes
   
   tasks:

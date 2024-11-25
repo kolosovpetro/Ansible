@@ -3,4 +3,11 @@
 *.sas.conf
 *.tfplan
 *.tfstate
-.ssh
+*.rdp
+
+# SSH keys
+id_rsa
+*.pub
+
+# Certs
+*.pfx

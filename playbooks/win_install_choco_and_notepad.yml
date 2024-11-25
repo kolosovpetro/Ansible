@@ -1,0 +1,12 @@
+﻿---
+- name: "Install Chocolatey and Notepad++"
+  hosts: windows
+  tasks:
+    - name: "Ensure Chocolatey is installed"
+      win_chocolatey:
+        state: present
+
+    - name: "Install Notepad++ using Chocolatey"
+      win_chocolatey:
+        name: notepadplusplus
+        state: present

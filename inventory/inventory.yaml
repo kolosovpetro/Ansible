@@ -1,0 +1,39 @@
+all:
+  children:
+    all_servers:
+      children:
+        db_servers:
+          hosts:
+            db_server:
+              ansible_host: ansible.dbserver.razumovsky.me
+              ansible_ssh_private_key_file: ~/.ssh/id_rsa
+              ansible_user: razumovsky_r
+              owner: Petya
+              htmlFile: green.html
+              port: 8090
+        web_servers:
+          hosts:
+            web_server:
+              ansible_host: ansible.webserver.razumovsky.me
+              ansible_ssh_private_key_file: ~/.ssh/id_rsa
+              ansible_user: razumovsky_r
+              owner: Vasya
+              htmlFile: red.html
+              port: 8090    
+        windows_servers:
+          hosts:
+            db_server_windows:
+              ansible_host: ansible.win.dbserver.razumovsky.me
+              ansible_user: razumovsky_r
+              ansible_password: e0WN5r9Q0nPfBgrV
+              ansible_port: 5986
+              ansible_connection: winrm
+              ansible_winrm_server_cert_validation: ignore
+            web_server_windows:
+              ansible_host: ansible.win.webserver.razumovsky.me
+              ansible_user: razumovsky_r
+              ansible_password: e0WN5r9Q0nPfBgrV
+              ansible_port: 5986
+              ansible_connection: winrm
+              ansible_winrm_server_cert_validation: ignore
+    ungrouped: {}

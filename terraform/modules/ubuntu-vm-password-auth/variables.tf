@@ -8,6 +8,11 @@ variable "resource_group_location" {
   description = "Location of the resource group."
 }
 
+variable "subnet_id" {
+  type        = string
+  description = "ID of the subnet"
+}
+
 variable "network_interface_name" {
   type        = string
   description = "Name of the network interface"
@@ -78,19 +83,14 @@ variable "os_profile_admin_username" {
   description = "Specifies the name of the administrator account."
 }
 
-variable "os_profile_admin_public_key_value" {
+variable "os_profile_admin_password" {
   type        = string
-  description = "Specifies the public key of the administrator account."
+  description = "Specifies the password of the administrator account."
 }
 
 variable "public_ip_name" {
   type        = string
   description = "Name of the public IP"
-}
-
-variable "subnet_id" {
-  type        = string
-  description = "ID of the subnet"
 }
 
 variable "network_security_group_id" {

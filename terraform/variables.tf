@@ -13,36 +13,6 @@ variable "resource_group_location" {
   description = "Location of the resource group."
 }
 
-variable "vnet_name" {
-  type        = string
-  description = "Name of the virtual network"
-}
-
-variable "subnet_name" {
-  type        = string
-  description = "Name of the subnet"
-}
-
-variable "network_interface_name" {
-  type        = string
-  description = "Name of the network interface"
-}
-
-variable "ip_configuration_name" {
-  type        = string
-  description = "Name of the IP configuration"
-}
-
-variable "nsg_name" {
-  type        = string
-  description = "Name of the network security group"
-}
-
-variable "vm_name" {
-  type        = string
-  description = "Name of the virtual machine"
-}
-
 variable "vm_size" {
   type        = string
   description = "The size of the virtual machine."
@@ -68,11 +38,6 @@ variable "storage_image_reference_version" {
   description = "Specifies the version of the platform image or marketplace image used to create the virtual machine."
 }
 
-variable "storage_os_disk_name" {
-  type        = string
-  description = "The name of the OS disk."
-}
-
 variable "storage_os_disk_caching" {
   type        = string
   description = "Specifies the caching requirements for the OS disk."
@@ -88,11 +53,6 @@ variable "storage_os_disk_managed_disk_type" {
   description = "Specifies the storage account type for the managed disk."
 }
 
-#variable "os_profile_computer_name" {
-#  type        = string
-#  description = "Specifies the host OS name of the virtual machine."
-#}
-
 variable "os_profile_admin_username" {
   type        = string
   description = "Specifies the name of the administrator account."
@@ -103,7 +63,46 @@ variable "os_profile_admin_public_key_path" {
   description = "Specifies the path to the public key file of the administrator account."
 }
 
-variable "vm_public_ip_name" {
+variable "os_profile_admin_password" {
   type        = string
-  description = "Name of the public IP address"
+  description = "Specifies the password of the administrator account."
+}
+
+variable "subscription_id" {
+  type        = string
+  description = "Azure subscription ID"
+}
+
+variable "storage_account_replication" {
+  type        = string
+  description = "Specifies the replication type for this storage account."
+}
+
+variable "storage_account_tier" {
+  type        = string
+  description = "Specifies the tier to use for this storage account."
+}
+
+variable "cloudflare_api_token" {
+  type        = string
+  description = "Cloudflare API token"
+}
+
+variable "ssl_certificate_name" {
+  type        = string
+  description = "Name of the SSL certificate"
+}
+variable "ssl_certificate_path" {
+  type        = string
+  description = "Path to the SSL certificate file"
+}
+
+variable "ssl_certificate_password" {
+  type        = string
+  description = "Password for the SSL certificate"
+}
+
+variable "dns_prefix" {
+  type        = string
+  description = "DNS prefix for the public IP address"
 }
