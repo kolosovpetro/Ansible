@@ -1,8 +1,12 @@
-# Ansible Control Node
+# Azure Application Gateway with Ansible managed backend pools
 
 Gameplay with Ansible control node and multiple managed nodes.
 
-## Application gateway components
+## Azure Application gateway diagram
+
+![ansible_concept](./img/Azure_App_Gateway.drawio.png)
+
+## Azure Application Gateway components
 
 - **Frontend IP Configuration** — Defines the private or public IP address that receives requests to the application
   gateway.
@@ -28,7 +32,7 @@ Gameplay with Ansible control node and multiple managed nodes.
 - **Gateway IP Configuration** — Binds an application gateway to a specific subnet, ensuring proper internal
   communication.
 
-## Steps to configure communication
+## Steps to configure Azure Application Gateway
 
 - Deploy virtual network
 - Deploy application gateway subnet
@@ -134,14 +138,6 @@ From control node execute:
 - Set-ExecutionPolicy -ExecutionPolicy Bypass
 - pip install "pywinrm>=0.3.0"
 - Application gateway quizlet: https://quizlet.com/pl/975398961/azure-application-gateway-flash-cards/
-
-## Provision infrastructure (Terraform)
-
-- Copy your SSH public key to
-
-## Diagram
-
-![ansible_concept](./img/Ansible_concept.png)
 
 ## Links
 
