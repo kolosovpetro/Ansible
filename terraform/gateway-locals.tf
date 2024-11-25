@@ -32,4 +32,15 @@
       name = local.backend_pool_qa
     }
   ]
+  
+  https_listeners = [
+    {
+      name      = "https-listener-dev"
+      host_name = local.custom_cloudflare_dev_fqdn
+    },
+    {
+      name      = "https-listener-qa"
+      host_name = local.custom_cloudflare_qa_fqdn
+    }
+  ]
 }

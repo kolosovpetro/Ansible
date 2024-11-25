@@ -42,13 +42,16 @@ resource "azurerm_application_gateway" "app_gateway" {
     request_timeout       = 60
   }
 
-  http_listener {
-    name                           = local.http_listener_name
-    frontend_ip_configuration_name = local.frontend_ip_configuration_name
-    frontend_port_name             = local.https_port_name
-    protocol                       = "Https"
-    ssl_certificate_name           = local.ssl_certificate_name
-    host_name                      = local.custom_cloudflare_dev_fqdn
+  dynamic "http_listener" {
+    for_each = local.https_listeners
+    content {
+      name                           = http_listener.value.name
+      frontend_ip_configuration_name = local.frontend_ip_configuration_name
+      frontend_port_name             = local.https_port_name
+      protocol                       = "Https"
+      ssl_certificate_name           = local.ssl_certificate_name
+      host_name                      = http_listener.value.host_name
+    }
   }
 
   ssl_certificate {
@@ -60,7 +63,7 @@ resource "azurerm_application_gateway" "app_gateway" {
   request_routing_rule {
     name                       = local.routing_rule_name
     rule_type                  = "Basic"
-    http_listener_name         = local.http_listener_name
+    http_listener_name         = local.https_listeners[0].name
     backend_address_pool_name  = local.backend_pool_dev
     backend_http_settings_name = local.http_settings_name
     priority                   = 1
