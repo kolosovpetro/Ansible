@@ -41,9 +41,13 @@ resource "cloudflare_record" "windows_servers_dns" {
 }
 
 resource "cloudflare_record" "agwy_dns" {
+  for_each = {
+    dev = local.custom_cloudflare_dev_fqdn
+    qa  = local.custom_cloudflare_qa_fqdn
+  }
   zone_id = data.cloudflare_zone.razumovsky_me_zone.id
-  name    = "agwy-test"
-  content = module.application_gateway.agwy_public_ip_address
+  name    = each.value
+  content = azurerm_public_ip.gateway_public_ip.ip_address
   type    = "A"
   proxied = false
 }

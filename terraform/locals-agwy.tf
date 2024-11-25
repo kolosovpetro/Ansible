@@ -17,15 +17,14 @@
   app_service_qa_name          = "ase-qa-${var.prefix}"
   app_service_qa_default_fqdn  = "ase-qa-${var.prefix}.azurewebsites.net"
 
-  frontend_https_port_name       = "front-port-443"
-  frontend_http_port_name        = "front-port-80"
+  https_port_name       = "front-port-443"
+  http_port_name        = "front-port-80"
   frontend_ip_configuration_name = "front-ip-config-${var.prefix}"
-  backend_https_settings_name    = "backend-https-settings-${var.prefix}"
   backend_http_settings_name     = "backend-http-settings-${var.prefix}"
   ssl_certificate_name           = "razumovsky.me.pfx"
   domain_name                    = "razumovsky.me"
-  custom_cloudflare_dev_fqdn     = "agwy-dev.${local.domain_name}"
-  custom_cloudflare_qa_fqdn      = "agwy-qa.${local.domain_name}"
+  custom_cloudflare_dev_fqdn     = "agwy-vm-dev.${local.domain_name}"
+  custom_cloudflare_qa_fqdn      = "agwy-vm-qa.${local.domain_name}"
 
   https_routing_settings = [
     {

@@ -2,7 +2,7 @@ output "control_node_linux_public_ip" {
   value = {
     ip         = module.control_node.public_ip_address
     sub_domain = local.control_node.sub_domain
-    fqdn       = "https://${local.control_node.sub_domain}.${var.dns_prefix}"
+    fqdn       = "http://${local.control_node.sub_domain}.${var.dns_prefix}"
   }
 }
 
@@ -10,7 +10,7 @@ output "web_server_linux_public_ip" {
   value = {
     ip         = module.linux_servers[local.linux_servers.web_server_linux.indexer].public_ip_address
     sub_domain = local.linux_servers.web_server_linux.sub_domain
-    fqdn       = "https://${local.linux_servers.web_server_linux.sub_domain}.${var.dns_prefix}"
+    fqdn       = "http://${local.linux_servers.web_server_linux.sub_domain}.${var.dns_prefix}"
   }
 }
 
@@ -18,7 +18,7 @@ output "db_server_linux_public_ip" {
   value = {
     ip         = module.linux_servers[local.linux_servers.db_server_linux.indexer].public_ip_address
     sub_domain = local.linux_servers.db_server_linux.sub_domain
-    fqdn       = "https://${local.linux_servers.db_server_linux.sub_domain}.${var.dns_prefix}"
+    fqdn       = "http://${local.linux_servers.db_server_linux.sub_domain}.${var.dns_prefix}"
   }
 }
 
@@ -26,7 +26,7 @@ output "web_server_windows_public_ip" {
   value = {
     ip         = module.windows_servers[local.windows_servers.web_server_windows.indexer].public_ip_address
     sub_domain = local.windows_servers.web_server_windows.sub_domain
-    fqdn       = "https://${local.windows_servers.web_server_windows.sub_domain}.${var.dns_prefix}"
+    fqdn       = "http://${local.windows_servers.web_server_windows.sub_domain}.${var.dns_prefix}"
   }
 }
 
@@ -34,15 +34,23 @@ output "db_server_windows_public_ip" {
   value = {
     ip         = module.windows_servers[local.windows_servers.db_server_windows.indexer].public_ip_address
     sub_domain = local.windows_servers.db_server_windows.sub_domain
-    fqdn       = "https://${local.windows_servers.db_server_windows.sub_domain}.${var.dns_prefix}"
+    fqdn       = "http://${local.windows_servers.db_server_windows.sub_domain}.${var.dns_prefix}"
   }
 }
 
-output "application_gateway_dev_data" {
+output "gateway_dev_data" {
   value = {
-    ip         = module.application_gateway.agwy_public_ip_address
-    sub_domain = "agwy.test"
-    fqdn       = "https://agwy.test.${var.dns_prefix}"
+    ip         = azurerm_public_ip.gateway_public_ip.ip_address
+    sub_domain = local.custom_cloudflare_dev_fqdn
+    fqdn       = "http://${local.custom_cloudflare_dev_fqdn}"
+  }
+}
+
+output "gateway_qa_data" {
+  value = {
+    ip         = azurerm_public_ip.gateway_public_ip.ip_address
+    sub_domain = local.custom_cloudflare_qa_fqdn
+    fqdn       = "http://${local.custom_cloudflare_qa_fqdn}"
   }
 }
 

@@ -17,11 +17,25 @@ Gameplay with Ansible control node and multiple managed nodes.
 
 ## DNS
 
+### Servers
+
 - http://ansible-control-node.razumovsky.me
 - http://ansible-dbserver.razumovsky.me
 - http://ansible-webserver.razumovsky.me
 - http://ansible-win-dbserver.razumovsky.me
 - http://ansible-win-webserver.razumovsky.me
+
+### App gateway
+
+DEV
+
+- https://agwy-vm-dev.razumovsky.me
+- http://agwy-vm-dev.razumovsky.me
+
+QA
+
+- https://agwy-vm-qa.razumovsky.me
+- http://agwy-vm-qa.razumovsky.me
 
 ## SSH configuration for Linux managed nodes
 
