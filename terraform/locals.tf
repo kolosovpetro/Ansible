@@ -3,9 +3,9 @@ locals {
   network_settings = {
     nsg_name                = "nsg-ansible-${var.prefix}"
     vnet_name               = "vnet-ansible-${var.prefix}"
-    snet_agwy_frontend_name = "snet-agwy-frontend-${var.prefix}"
-    snet_linux_name         = "snet-linux-servers-${var.prefix}"
-    snet_windows_name       = "snet-windows-servers-${var.prefix}"
+    snet_agwy_frontend_name = "subnet-gateway-${var.prefix}"
+    snet_linux_name         = "subnet-linux-servers-${var.prefix}"
+    snet_windows_name       = "subnet-windows-servers-${var.prefix}"
   }
 
   control_node = {

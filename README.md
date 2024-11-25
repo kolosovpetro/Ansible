@@ -2,6 +2,20 @@
 
 Gameplay with Ansible control node and multiple managed nodes.
 
+## Steps to configure communication
+
+- Deploy virtual network
+- Deploy application gateway subnet
+- Deploy application gateway public IP
+- Associate gateway with subnet using `gateway_ip_configuration` block
+- Define app gateway frontend ports (80, 443) by using `frontend_port` block
+- Associate app gateway with public IP using `frontend_ip_configuration` block
+- Define backend pools with app services FQDNs by using `backend_address_pool` block
+- Define the way gateway communicates with backend via `http_settings` block
+- Add http and https listeners to the app gateway using `http_listener` block
+- Define routing rules to handle requests based on headers CN
+- Create a Cloudflare DNS record for the app gateway public IP and test connection
+
 ## Related repositories
 
 - https://github.com/kolosovpetro/packer-azure-windows-image

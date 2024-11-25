@@ -111,14 +111,14 @@ data "azurerm_application_gateway" "example" {
   resource_group_name = azurerm_resource_group.public.name
 }
 
-resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc" {
+resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "backend_pool_dev" {
   for_each                = module.windows_servers
   network_interface_id    = each.value.network_interface_id
   ip_configuration_name   = each.value.ip_configuration_name
   backend_address_pool_id = data.azurerm_application_gateway.example.backend_address_pool[0].id
 }
 
-resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "qa_backend_pool" {
+resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "backend_pool_qa" {
   for_each                = module.linux_servers
   network_interface_id    = each.value.network_interface_id
   ip_configuration_name   = each.value.ip_configuration_name
