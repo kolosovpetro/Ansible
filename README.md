@@ -1,5 +1,13 @@
 # Ansible
 
+## DNS
+
+- http://ansible-control-node.razumovsky.me
+- http://ansible-dbserver.razumovsky.me
+- http://ansible-webserver.razumovsky.me
+- http://ansible-win-dbserver.razumovsky.me
+- http://ansible-win-webserver.razumovsky.me
+
 ## Infrastructure provisioning
 
 - Run terraform code (terraform init, plan, apply)
@@ -13,14 +21,6 @@
 - SSH to control node and test connections
     - `ansible linux_servers -m ping`
     - `ansible windows_servers -m win_ping`
-
-## DNS
-
-- http://ansible-control-node.razumovsky.me
-- http://ansible-dbserver.razumovsky.me
-- http://ansible-webserver.razumovsky.me
-- http://ansible-win-dbserver.razumovsky.me
-- http://ansible-win-webserver.razumovsky.me
 
 ## SSH configuration for Linux managed nodes
 
