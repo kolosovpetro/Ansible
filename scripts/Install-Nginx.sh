@@ -1,4 +1,6 @@
 #!/bin/bash
 
-sudo apt update -y
-sudo apt install -y nginx build-essential
+echo "Install nginx and build essential"
+
+sudo apt-get install -y build-essential
+sudo apt-get install -y nginx

@@ -77,7 +77,7 @@ variable "private_ip_address" {
   description = "Private IP address of the virtual machine"
 }
 
-# variable "image_resource_group_name" {
-#   type        = string
-#   description = "Name of the resource group where the image is stored"
-# }
+variable "image_resource_group_name" {
+  type        = string
+  description = "Name of the resource group where the image is stored"
+}

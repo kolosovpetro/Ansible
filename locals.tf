@@ -52,9 +52,10 @@ locals {
       os_profile_computer_name    = "web-server-win"
       storage_os_disk_name        = "os-disk-web-server-windows-${var.prefix}"
       vm_name                     = "vm-web-server-win-${var.prefix}"
-      storage_image_reference_sku = "2022-Datacenter"
+      storage_image_reference_sku = "windows-server2022-v4"
       sub_domain                  = "ansible-win-webserver"
       private_ip_address          = "10.0.0.10"
+      image_resource_group_name   = "rg-packer-images-win"
     }
     db_server_windows = {
       indexer                     = "db_server_windows"
@@ -64,10 +65,11 @@ locals {
       os_profile_computer_name    = "db-server-win"
       storage_os_disk_name        = "os-disk-db-server-windows-${var.prefix}"
       vm_name                     = "vm-db-server-win-${var.prefix}"
-      storage_image_reference_sku = "2022-Datacenter"
+      storage_image_reference_sku = "windows-server2022-v4"
       image_resource_group_name   = "rg-packer-win-2019"
       sub_domain                  = "ansible-win-dbserver"
       private_ip_address          = "10.0.0.11"
+      image_resource_group_name   = "rg-packer-images-win"
     }
   }
 }

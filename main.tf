@@ -49,6 +49,17 @@ module "control_node" {
   network_security_group_id         = module.network.network_security_group_id
 }
 
+module "upgrade_system_packages_control_node" {
+  source                       = "./modules/provisioner-linux"
+  os_profile_admin_username    = var.os_profile_admin_username
+  private_key_path             = "${path.root}/id_rsa"
+  provision_script_destination = "/tmp/Upgrade-System-Packages.sh"
+  provision_script_path        = "${path.root}/scripts/Upgrade-System-Packages.sh"
+  vm_public_ip_address         = module.control_node.public_ip_address
+
+  depends_on = [module.control_node]
+}
+
 #################################################################################################################
 # ANSIBLE LINUX TARGETS
 #################################################################################################################
@@ -78,26 +89,14 @@ module "linux_servers" {
   os_profile_admin_public_key_value = file("${path.root}/id_rsa.pub")
 }
 
-module "install_nginx_web_server_linux" {
+module "upgrade_system_packages_linux_targets" {
+  for_each                     = module.linux_servers
   source                       = "./modules/provisioner-linux"
   os_profile_admin_username    = var.os_profile_admin_username
   private_key_path             = "${path.root}/id_rsa"
-  provision_script_destination = "/tmp/Install-Nginx.sh"
-  provision_script_path        = "${path.root}/scripts/Install-Nginx.sh"
-  vm_public_ip_address         = module.linux_servers[local.linux_servers.web_server_linux.indexer].public_ip_address
-
-  depends_on = [
-    module.linux_servers
-  ]
-}
-
-module "install_nginx_db_server_linux" {
-  source                       = "./modules/provisioner-linux"
-  os_profile_admin_username    = var.os_profile_admin_username
-  private_key_path             = "${path.root}/id_rsa"
-  provision_script_destination = "/tmp/Install-Nginx.sh"
-  provision_script_path        = "${path.root}/scripts/Install-Nginx.sh"
-  vm_public_ip_address         = module.linux_servers[local.linux_servers.db_server_linux.indexer].public_ip_address
+  provision_script_destination = "/tmp/Upgrade-System-Packages.sh"
+  provision_script_path        = "${path.root}/scripts/Upgrade-System-Packages.sh"
+  vm_public_ip_address         = module.linux_servers[each.key].public_ip_address
 
   depends_on = [
     module.linux_servers
@@ -126,17 +125,19 @@ module "windows_servers" {
   private_ip_address          = each.value.private_ip_address
   subnet_id                   = module.network.subnet_windows_servers_id
   network_security_group_id   = module.network.network_security_group_id
+  image_resource_group_name   = each.value.image_resource_group_name
 }
 
-module "provision_web_server_windows_winrm" {
-  source                       = "./modules/provisioner-windows"
-  os_profile_admin_username    = var.os_profile_admin_username
-  os_profile_admin_password    = var.os_profile_admin_password
-  provision_script_destination = "C:\\Temp\\Configure-Ansible-WinRM.ps1"
-  provision_script_path        = "${path.root}/scripts/Configure-Ansible-WinRM.ps1"
-  public_ip_address            = module.windows_servers[local.windows_servers.web_server_windows.indexer].public_ip_address
-
-  depends_on = [
-    module.windows_servers
-  ]
-}
+# module "provision_web_server_windows_winrm" {
+#   for_each                     = module.windows_servers
+#   source                       = "./modules/provisioner-windows"
+#   os_profile_admin_username    = var.os_profile_admin_username
+#   os_profile_admin_password    = var.os_profile_admin_password
+#   provision_script_destination = "C:\\Temp\\Configure-Ansible-WinRM.ps1"
+#   provision_script_path        = "${path.root}/scripts/Configure-Ansible-WinRM.ps1"
+#   public_ip_address            = module.windows_servers[each.key].public_ip_address
+#
+#   depends_on = [
+#     module.windows_servers
+#   ]
+# }
