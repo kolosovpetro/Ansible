@@ -1,12 +1,18 @@
 # Ansible
 
-## Infrastructure
+## Infrastructure provisioning
 
-- Control node (SSH key authentication)
-- DB server (Password authentication -> then copy id to be executed)
-- Web server (Password authentication -> then copy id to be executed)
-- Windows DB server (RDP)
-- Windows Web server (RDP)
+- Run terraform code (terraform init, plan, apply)
+    - Terraform provisions 5 azure virtual machines (1 control node, 2 linux managed nodes, 2 windows managed nodes)
+    - Terraform configures WinRM for Windows machines my means of custom script extension and
+      `Configure-Ansible-WinRM.ps1` script
+    - Terraform installs latest updates, nginx (for tests) and Ansible to Control node using `remote exec` provisioner
+    - Terraform installs latest updates, nginx (for tests) to Linux nodes using `remote exec` provisioner
+- Configure Cloudflare DNS records using `Configure-CloudflareDnsRecords.ps1` powershell script
+- Configure ansible control node (ansible.cfg, inventory files) using `Initialize-Control-Node.ps1` powershell script
+- SSH to control node and test connections
+    - `ansible linux_servers -m ping`
+    - `ansible windows_servers -m win_ping`
 
 ## DNS
 
