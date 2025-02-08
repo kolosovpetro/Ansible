@@ -20,7 +20,7 @@ Write-Output "Completed: SSH private key secured on the control node."
 
 # Copy the Ansible configuration file to the control node
 Write-Output "Starting: Copying the Ansible configuration file to the control node..."
-scp "../ansible.cfg" razumovsky_r@ansible-control-node.razumovsky.me:~/ansible.cfg
+scp "ansible.cfg" razumovsky_r@ansible-control-node.razumovsky.me:~/ansible.cfg
 if (-not $?)
 {
     Write-Output "Error: Failed to copy the Ansible configuration file. Stopping execution."
@@ -40,7 +40,7 @@ Write-Output "Completed: Ansible configuration file moved to /etc/ansible/."
 
 # Copy the inventory file to the control node
 Write-Output "Starting: Copying the inventory file to the control node..."
-scp "../inventory/inventory.ini" razumovsky_r@ansible-control-node.razumovsky.me:~/inventory.ini
+scp "inventory/inventory.ini" razumovsky_r@ansible-control-node.razumovsky.me:~/inventory.ini
 ssh razumovsky_r@ansible-control-node.razumovsky.me "sudo mv ~/inventory.ini /etc/ansible"
 if (-not $?)
 {

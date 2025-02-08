@@ -173,16 +173,16 @@ module "windows_servers" {
   image_resource_group_name   = each.value.image_resource_group_name
 }
 
-# module "provision_web_server_windows_winrm" {
-#   for_each                     = module.windows_servers
-#   source                       = "./modules/provisioner-windows"
-#   os_profile_admin_username    = var.os_profile_admin_username
-#   os_profile_admin_password    = var.os_profile_admin_password
-#   provision_script_destination = "C:\\Temp\\Configure-Ansible-WinRM.ps1"
-#   provision_script_path        = "${path.root}/scripts/Configure-Ansible-WinRM.ps1"
-#   public_ip_address            = module.windows_servers[each.key].public_ip_address
-#
-#   depends_on = [
-#     module.windows_servers
-#   ]
-# }
+module "provision_web_server_windows_winrm" {
+  for_each                     = module.windows_servers
+  source                       = "./modules/provisioner-windows"
+  os_profile_admin_username    = var.os_profile_admin_username
+  os_profile_admin_password    = var.os_profile_admin_password
+  provision_script_destination = "C:\\Temp\\Configure-Ansible-WinRM.ps1"
+  provision_script_path        = "${path.root}/scripts/Configure-Ansible-WinRM.ps1"
+  public_ip_address            = module.windows_servers[each.key].public_ip_address
+
+  depends_on = [
+    module.windows_servers
+  ]
+}
