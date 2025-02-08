@@ -57,7 +57,37 @@ module "upgrade_system_packages_control_node" {
   provision_script_path        = "${path.root}/scripts/Upgrade-System-Packages.sh"
   vm_public_ip_address         = module.control_node.public_ip_address
 
-  depends_on = [module.control_node]
+  depends_on = [
+    module.control_node
+  ]
+}
+
+module "configure_ansible_control_node" {
+  source                       = "./modules/provisioner-linux"
+  os_profile_admin_username    = var.os_profile_admin_username
+  private_key_path             = "${path.root}/id_rsa"
+  provision_script_destination = "/tmp/Install-Ansible.sh"
+  provision_script_path        = "${path.root}/scripts/Install-Ansible.sh"
+  vm_public_ip_address         = module.control_node.public_ip_address
+
+  depends_on = [
+    module.control_node,
+    module.upgrade_system_packages_control_node
+  ]
+}
+
+module "install_nginx_control_node" {
+  source                       = "./modules/provisioner-linux"
+  os_profile_admin_username    = var.os_profile_admin_username
+  private_key_path             = "${path.root}/id_rsa"
+  provision_script_destination = "/tmp/Install-Nginx.sh"
+  provision_script_path        = "${path.root}/scripts/Install-Nginx.sh"
+  vm_public_ip_address         = module.control_node.public_ip_address
+
+  depends_on = [
+    module.control_node,
+    module.configure_ansible_control_node
+  ]
 }
 
 #################################################################################################################
@@ -100,6 +130,21 @@ module "upgrade_system_packages_linux_targets" {
 
   depends_on = [
     module.linux_servers
+  ]
+}
+
+module "install_nginx_linux_targets" {
+  for_each                     = module.linux_servers
+  source                       = "./modules/provisioner-linux"
+  os_profile_admin_username    = var.os_profile_admin_username
+  private_key_path             = "${path.root}/id_rsa"
+  provision_script_destination = "/tmp/Install-Nginx.sh"
+  provision_script_path        = "${path.root}/scripts/Install-Nginx.sh"
+  vm_public_ip_address         = module.linux_servers[each.key].public_ip_address
+
+  depends_on = [
+    module.linux_servers,
+    module.upgrade_system_packages_linux_targets
   ]
 }
 

@@ -1,29 +1,26 @@
 #!/bin/bash
 
-echo "Installing Python and PIP..."
+set -e  # Exit script on any error
 
-sudo apt-get update
-sudo apt install -y python3 python3-pip python3-dev build-essential
-sudo pip3 install --upgrade pip
-sudo pip install "pywinrm>=0.3.0"
+echo "Updating package lists..."
+sudo apt-get update -y
+
+echo "Installing Python3, PIP, and dependencies..."
+sudo apt-get install -y python3 python3-pip python3-dev
+
+echo "Upgrading PIP and installing pywinrm..."
+pip3 install --upgrade pip
+pip3 install "pywinrm>=0.3.0"
+
+echo "Python version:"
 python3 --version
 
-echo "Python and PIP installed successfully"
-
 echo "Installing Ansible..."
-
-sudo apt update -y
-sudo apt install software-properties-common
+sudo apt-get install -y software-properties-common
 sudo add-apt-repository --yes --update ppa:ansible/ansible
-sudo apt install ansible -y
+sudo apt-get install -y ansible
 
+echo "Ansible version:"
 ansible --version
 
-echo "Ansible installed successfully"
-
-echo "Installing Nginx..."
-
-sudo apt update -y
-sudo apt install -y nginx build-essential
-
-echo "Nginx installed successfully"
+echo "Installation complete!"
