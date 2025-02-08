@@ -173,16 +173,28 @@ module "windows_servers" {
   image_resource_group_name   = each.value.image_resource_group_name
 }
 
-module "provision_web_server_windows_winrm" {
-  for_each                     = module.windows_servers
-  source                       = "./modules/provisioner-windows"
-  os_profile_admin_username    = var.os_profile_admin_username
-  os_profile_admin_password    = var.os_profile_admin_password
-  provision_script_destination = "C:\\Temp\\Configure-Ansible-WinRM.ps1"
-  provision_script_path        = "${path.root}/scripts/Configure-Ansible-WinRM.ps1"
-  public_ip_address            = module.windows_servers[each.key].public_ip_address
+module "storage" {
+  source                      = "./modules/storage"
+  storage_account_name        = "storvmwin${var.prefix}"
+  storage_account_replication = var.storage_account_replication
+  storage_account_tier        = var.storage_account_tier
+  storage_container_name      = "contvmwin${var.prefix}"
+  storage_location            = azurerm_resource_group.public.location
+  storage_resource_group_name = azurerm_resource_group.public.name
+}
+
+module "configure_windows_servers_winrm_extension" {
+  for_each                              = module.windows_servers
+  source                                = "./modules/custom-script-extension"
+  custom_script_extension_absolute_path = "${path.root}/scripts/Configure-Ansible-WinRM.ps1"
+  custom_script_extension_file_name     = "Configure-Ansible-WinRM.ps1"
+  extension_name                        = "ConfigureAnsibleWinRM"
+  storage_account_name                  = module.storage.storage_account_name
+  storage_container_name                = module.storage.storage_container_name
+  virtual_machine_id                    = each.value.id
 
   depends_on = [
+    module.storage,
     module.windows_servers
   ]
 }
