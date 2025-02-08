@@ -1,57 +1,4 @@
-# Azure Application Gateway with Ansible managed backend pools
-
-Windows and Linux backend servers under Azure Application gateway, provisioned
-using Terraform. Ansible is used to manage backend servers. DNS records are created
-using Cloudflare Terraform provider.
-
-## Azure Application gateway diagram
-
-![ansible_concept](./img/Azure_App_Gateway.drawio.png)
-
-## Azure Application Gateway components
-
-- **Frontend IP Configuration** — Defines the private or public IP address that receives requests to the application
-  gateway.
-
-- **Frontend Port** — Defines a port that accepts incoming requests to the application gateway.
-
-- **Backend Pool** — A list of IP addresses or FQDNs where traffic is forwarded.
-
-- **HTTP Settings** — Defines how the application gateway sends incoming traffic to backend servers by setting up a
-  protocol, backend port, and timeout interval.
-
-- **HTTP Listener** — Binds the **Frontend IP Configuration**, **Frontend Port**, and protocol together to listen for
-  incoming requests.
-
-- **SSL Certificate** — Used in HTTPS listeners to secure communication between the gateway and clients by enabling
-  traffic encryption.
-
-- **Routing Rules** — Binds **HTTP Listener**, **Backend Pool**, and **HTTP Settings** to define how traffic is routed
-  to backend servers.
-
-- **Health Probe** — Ensures that traffic is delivered only to healthy backend servers.
-
-- **Gateway IP Configuration** — Binds an application gateway to a specific subnet, ensuring proper internal
-  communication.
-
-## Steps to configure Azure Application Gateway
-
-- Deploy virtual network
-- Deploy application gateway subnet
-- Deploy application gateway public IP
-- Associate gateway with subnet using `gateway_ip_configuration` block
-- Define app gateway frontend ports (80, 443) by using `frontend_port` block
-- Associate app gateway with public IP using `frontend_ip_configuration` block
-- Define backend pools with app services FQDNs by using `backend_address_pool` block
-- Define the way gateway communicates with backend via `http_settings` block
-- Add http and https listeners to the app gateway using `http_listener` block
-- Define routing rules to handle requests based on headers CN
-- Create a Cloudflare DNS record for the app gateway public IP and test connection
-
-## Related repositories
-
-- https://github.com/kolosovpetro/packer-azure-windows-image
-- https://github.com/kolosovpetro/azure-windows-vm-terraform
+# Ansible
 
 ## Infrastructure
 
@@ -63,25 +10,11 @@ using Cloudflare Terraform provider.
 
 ## DNS
 
-### Servers
-
 - http://ansible-control-node.razumovsky.me
 - http://ansible-dbserver.razumovsky.me
 - http://ansible-webserver.razumovsky.me
 - http://ansible-win-dbserver.razumovsky.me
 - http://ansible-win-webserver.razumovsky.me
-
-### App gateway
-
-DEV
-
-- https://agwy-vm-dev.razumovsky.me
-- http://agwy-vm-dev.razumovsky.me
-
-QA
-
-- https://agwy-vm-qa.razumovsky.me
-- http://agwy-vm-qa.razumovsky.me
 
 ## SSH configuration for Linux managed nodes
 
@@ -140,6 +73,11 @@ From control node execute:
 - Set-ExecutionPolicy -ExecutionPolicy Bypass
 - pip install "pywinrm>=0.3.0"
 - Application gateway quizlet: https://quizlet.com/pl/975398961/azure-application-gateway-flash-cards/
+
+## Related repositories
+
+- https://github.com/kolosovpetro/packer-azure-windows-image
+- https://github.com/kolosovpetro/azure-windows-vm-terraform
 
 ## Links
 
