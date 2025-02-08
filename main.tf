@@ -1,7 +1,15 @@
+#################################################################################################################
+# RESOURCE GROUP
+#################################################################################################################
+
 resource "azurerm_resource_group" "public" {
   location = var.resource_group_location
   name     = "rg-ansible-${var.prefix}"
 }
+
+#################################################################################################################
+# NETWORK
+#################################################################################################################
 
 module "network" {
   source                  = "./modules/network"
@@ -12,6 +20,10 @@ module "network" {
   snet_windows_name       = local.network_settings.snet_windows_name
   snet_linux_name         = local.network_settings.snet_linux_name
 }
+
+#################################################################################################################
+# ANSIBLE CONTROL NODE
+#################################################################################################################
 
 module "control_node" {
   source                            = "./modules/ubuntu-vm-public-key-auth"
@@ -36,6 +48,10 @@ module "control_node" {
   subnet_id                         = module.network.subnet_linux_servers_id
   network_security_group_id         = module.network.network_security_group_id
 }
+
+#################################################################################################################
+# ANSIBLE LINUX TARGETS
+#################################################################################################################
 
 module "linux_servers" {
   for_each                          = local.linux_servers
@@ -62,6 +78,36 @@ module "linux_servers" {
   os_profile_admin_public_key_value = file("${path.root}/id_rsa.pub")
 }
 
+module "install_nginx_web_server_linux" {
+  source                       = "./modules/provisioner-linux"
+  os_profile_admin_username    = var.os_profile_admin_username
+  private_key_path             = "${path.root}/id_rsa"
+  provision_script_destination = "/tmp/Install-Nginx.sh"
+  provision_script_path        = "${path.root}/scripts/Install-Nginx.sh"
+  vm_public_ip_address         = module.linux_servers[local.linux_servers.web_server_linux.indexer].public_ip_address
+
+  depends_on = [
+    module.linux_servers
+  ]
+}
+
+module "install_nginx_db_server_linux" {
+  source                       = "./modules/provisioner-linux"
+  os_profile_admin_username    = var.os_profile_admin_username
+  private_key_path             = "${path.root}/id_rsa"
+  provision_script_destination = "/tmp/Install-Nginx.sh"
+  provision_script_path        = "${path.root}/scripts/Install-Nginx.sh"
+  vm_public_ip_address         = module.linux_servers[local.linux_servers.db_server_linux.indexer].public_ip_address
+
+  depends_on = [
+    module.linux_servers
+  ]
+}
+
+#################################################################################################################
+# ANSIBLE WINDOWS TARGETS
+#################################################################################################################
+
 module "windows_servers" {
   for_each                    = local.windows_servers
   source                      = "./modules/windows-vm"
@@ -82,63 +128,15 @@ module "windows_servers" {
   network_security_group_id   = module.network.network_security_group_id
 }
 
-module "storage" {
-  source                      = "./modules/storage"
-  storage_account_name        = "storvmwin${var.prefix}"
-  storage_account_replication = var.storage_account_replication
-  storage_account_tier        = var.storage_account_tier
-  storage_container_name      = "contvmwin${var.prefix}"
-  storage_location            = azurerm_resource_group.public.location
-  storage_resource_group_name = azurerm_resource_group.public.name
+module "provision_web_server_windows_winrm" {
+  source                       = "./modules/provisioner-windows"
+  os_profile_admin_username    = var.os_profile_admin_username
+  os_profile_admin_password    = var.os_profile_admin_password
+  provision_script_destination = "C:\\Temp\\Configure-Ansible-WinRM.ps1"
+  provision_script_path        = "${path.root}/scripts/Configure-Ansible-WinRM.ps1"
+  public_ip_address            = module.windows_servers[local.windows_servers.web_server_windows.indexer].public_ip_address
 
   depends_on = [
-    azurerm_resource_group.public
-  ]
-}
-
-module "configure_windows_servers_winrm_extension" {
-  for_each                              = module.windows_servers
-  source                                = "./modules/custom-script-extension"
-  custom_script_extension_absolute_path = "${path.root}/scripts/Configure-Ansible-WinRM.ps1"
-  custom_script_extension_file_name     = "Configure-Ansible-WinRM.ps1"
-  extension_name                        = "Configure-Ansible-WinRM.ps1"
-  storage_account_name                  = module.storage.storage_account_name
-  storage_container_name                = module.storage.storage_container_name
-  virtual_machine_id                    = each.value.id
-
-  depends_on = [
-    module.storage,
-    module.windows_servers
-  ]
-}
-
-module "control_node_install_ansible_extension" {
-  source                                = "./modules/linux-custom-script-extension"
-  custom_script_extension_absolute_path = "${path.root}/scripts/Install-Ansible.sh"
-  custom_script_extension_file_name     = "Install-Ansible.sh"
-  extension_name                        = "Install-Ansible.sh"
-  storage_account_name                  = module.storage.storage_account_name
-  storage_container_name                = module.storage.storage_container_name
-  virtual_machine_id                    = module.control_node.id
-
-  depends_on = [
-    module.storage,
-    module.windows_servers
-  ]
-}
-
-module "managed_nodes_install_nginx" {
-  for_each                              = module.linux_servers
-  source                                = "./modules/linux-custom-script-extension"
-  custom_script_extension_absolute_path = "${path.root}/scripts/scripts/Install-Nginx.sh"
-  custom_script_extension_file_name     = "install_nginx_${each.key}.sh"
-  extension_name                        = "InstallNginx_${each.key}"
-  storage_account_name                  = module.storage.storage_account_name
-  storage_container_name                = module.storage.storage_container_name
-  virtual_machine_id                    = each.value.id
-
-  depends_on = [
-    module.storage,
     module.windows_servers
   ]
 }
