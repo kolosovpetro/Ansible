@@ -1,4 +1,4 @@
-﻿# Login to Azure (if not already logged in)
+# Login to Azure (if not already logged in)
 # Connect-AzAccount
 
 # Define the resource group name

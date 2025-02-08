@@ -1,4 +1,4 @@
-﻿# Convert the JSON string to a PowerShell object
+# Convert the JSON string to a PowerShell object
 $jsonData = $( terraform output -json )
 $data = $jsonData | ConvertFrom-Json
 $CloudflareToken = $env:CLOUDFLARE_TOKEN

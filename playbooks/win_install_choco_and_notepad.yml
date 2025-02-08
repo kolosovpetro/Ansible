@@ -1,4 +1,4 @@
-﻿---
+---
 - name: "Install Chocolatey and Notepad++"
   hosts: windows
   tasks:

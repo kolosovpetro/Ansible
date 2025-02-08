@@ -1,4 +1,4 @@
-﻿# Install IIS
+# Install IIS
 import-module servermanager
 add-windowsfeature web-server -includeallsubfeature
 add-windowsfeature Web-Asp-Net45

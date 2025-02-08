@@ -1,4 +1,4 @@
-﻿# Copy the SSH private key to the control node
+# Copy the SSH private key to the control node
 Write-Output "Starting: Copying the SSH private key to the control node..."
 scp "$env:USER_DIRECTORY/.ssh/id_rsa" razumovsky_r@ansible-control-node.razumovsky.me:~/.ssh
 if (-not $?)

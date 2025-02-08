@@ -1,4 +1,4 @@
-﻿param(
+param(
     [string]$ZoneId = "d8bdf4c7860b59eddfd9fcc7bf864b47",
     [string]$Token,
     [string]$Domain = "razumovsky.me",
