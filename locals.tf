@@ -1,11 +1,9 @@
 locals {
-  resource_group_name = "${var.resource_group_name}-${var.prefix}"
   network_settings = {
-    nsg_name                = "nsg-ansible-${var.prefix}"
-    vnet_name               = "vnet-ansible-${var.prefix}"
-    snet_agwy_frontend_name = "subnet-gateway-${var.prefix}"
-    snet_linux_name         = "subnet-linux-servers-${var.prefix}"
-    snet_windows_name       = "subnet-windows-servers-${var.prefix}"
+    nsg_name          = "nsg-ansible-${var.prefix}"
+    vnet_name         = "vnet-ansible-${var.prefix}"
+    snet_linux_name   = "subnet-linux-servers-${var.prefix}"
+    snet_windows_name = "subnet-windows-servers-${var.prefix}"
   }
 
   control_node = {
@@ -72,57 +70,4 @@ locals {
       private_ip_address          = "10.0.0.11"
     }
   }
-
-  secret_permissions = [
-    "Get",
-    "List",
-    "Set",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore",
-    "Purge"
-  ]
-
-  certificate_permissions = [
-    "Backup",
-    "Create",
-    "Delete",
-    "DeleteIssuers",
-    "Get",
-    "GetIssuers",
-    "Import",
-    "List",
-    "ListIssuers",
-    "ManageContacts",
-    "ManageIssuers",
-    "Purge",
-    "Recover",
-    "Restore",
-    "SetIssuers",
-    "Update"
-  ]
-
-  key_permissions = [
-    "Backup",
-    "Create",
-    "Decrypt",
-    "Delete",
-    "Encrypt",
-    "Get",
-    "Import",
-    "List",
-    "Purge",
-    "Recover",
-    "Restore",
-    "Sign",
-    "UnwrapKey",
-    "Update",
-    "Verify",
-    "WrapKey",
-    "Release",
-    "Rotate",
-    "GetRotationPolicy",
-    "SetRotationPolicy"
-  ]
 }

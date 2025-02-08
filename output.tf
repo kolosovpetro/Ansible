@@ -38,22 +38,6 @@ output "db_server_windows_public_ip" {
   }
 }
 
-output "gateway_dev_data" {
-  value = {
-    ip         = azurerm_public_ip.gateway_public_ip.ip_address
-    sub_domain = local.custom_cloudflare_dev_fqdn
-    fqdn       = "http://${local.custom_cloudflare_dev_fqdn}"
-  }
-}
-
-output "gateway_qa_data" {
-  value = {
-    ip         = azurerm_public_ip.gateway_public_ip.ip_address
-    sub_domain = local.custom_cloudflare_qa_fqdn
-    fqdn       = "http://${local.custom_cloudflare_qa_fqdn}"
-  }
-}
-
 output "os_user_name" {
   value = var.os_profile_admin_username
 }

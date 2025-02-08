@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "public" {
   location = var.resource_group_location
-  name     = local.resource_group_name
+  name     = "rg-ansible-${var.prefix}"
 }
 
 module "network" {

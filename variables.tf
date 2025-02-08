@@ -1,3 +1,8 @@
+variable "prefix" {
+  type        = string
+  description = "Resources name prefix"
+}
+
 variable "resource_group_name" {
   type        = string
   description = "Resource group name"
@@ -6,26 +11,6 @@ variable "resource_group_name" {
 variable "resource_group_location" {
   type        = string
   description = "Location of the resource group."
-}
-
-variable "subnet_id" {
-  type        = string
-  description = "ID of the subnet"
-}
-
-variable "network_interface_name" {
-  type        = string
-  description = "Name of the network interface"
-}
-
-variable "ip_configuration_name" {
-  type        = string
-  description = "Name of the IP configuration"
-}
-
-variable "vm_name" {
-  type        = string
-  description = "Name of the virtual machine"
 }
 
 variable "vm_size" {
@@ -53,11 +38,6 @@ variable "storage_image_reference_version" {
   description = "Specifies the version of the platform image or marketplace image used to create the virtual machine."
 }
 
-variable "storage_os_disk_name" {
-  type        = string
-  description = "The name of the OS disk."
-}
-
 variable "storage_os_disk_caching" {
   type        = string
   description = "Specifies the caching requirements for the OS disk."
@@ -73,14 +53,14 @@ variable "storage_os_disk_managed_disk_type" {
   description = "Specifies the storage account type for the managed disk."
 }
 
-variable "os_profile_computer_name" {
-  type        = string
-  description = "Specifies the host OS name of the virtual machine."
-}
-
 variable "os_profile_admin_username" {
   type        = string
   description = "Specifies the name of the administrator account."
+}
+
+variable "os_profile_admin_public_key_path" {
+  type        = string
+  description = "Specifies the path to the public key file of the administrator account."
 }
 
 variable "os_profile_admin_password" {
@@ -88,12 +68,22 @@ variable "os_profile_admin_password" {
   description = "Specifies the password of the administrator account."
 }
 
-variable "public_ip_name" {
+variable "subscription_id" {
   type        = string
-  description = "Name of the public IP"
+  description = "Azure subscription ID"
 }
 
-variable "network_security_group_id" {
+variable "storage_account_replication" {
   type        = string
-  description = "ID of the network security group"
+  description = "Specifies the replication type for this storage account."
+}
+
+variable "storage_account_tier" {
+  type        = string
+  description = "Specifies the tier to use for this storage account."
+}
+
+variable "dns_prefix" {
+  type        = string
+  description = "DNS prefix for the public IP address"
 }

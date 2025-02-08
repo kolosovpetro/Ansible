@@ -13,7 +13,8 @@ resource "azurerm_network_interface" "public" {
   ip_configuration {
     name                          = var.ip_configuration_name
     subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = "Static"
+    private_ip_address            = var.private_ip_address
     public_ip_address_id          = azurerm_public_ip.public.id
   }
 }
@@ -22,6 +23,11 @@ resource "azurerm_network_interface_security_group_association" "public" {
   network_interface_id      = azurerm_network_interface.public.id
   network_security_group_id = var.network_security_group_id
 }
+
+# data "azurerm_image" "search" {
+#   name                = var.storage_image_reference_sku
+#   resource_group_name = var.image_resource_group_name
+# }
 
 resource "azurerm_virtual_machine" "public" {
   name                  = var.vm_name
@@ -32,22 +38,30 @@ resource "azurerm_virtual_machine" "public" {
 
   delete_os_disk_on_termination = true
 
-  storage_image_reference {
-    publisher = var.storage_image_reference_publisher
-    offer     = var.storage_image_reference_offer
-    sku       = var.storage_image_reference_sku
-    version   = var.storage_image_reference_version
+  identity {
+    type = "SystemAssigned"
   }
+
+  storage_image_reference {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = var.storage_image_reference_sku
+    version   = "latest"
+  }
+
+  # storage_image_reference {
+  #   id = data.azurerm_image.search.id
+  # }
 
   storage_os_disk {
     name              = var.storage_os_disk_name
-    caching           = var.storage_os_disk_caching
-    create_option     = var.storage_os_disk_create_option
-    managed_disk_type = var.storage_os_disk_managed_disk_type
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "StandardSSD_LRS"
   }
 
-  os_profile_linux_config {
-    disable_password_authentication = false
+  os_profile_windows_config {
+    provision_vm_agent = true
   }
 
   os_profile {
