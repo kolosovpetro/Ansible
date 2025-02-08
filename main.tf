@@ -18,7 +18,7 @@ module "control_node" {
   ip_configuration_name             = local.control_node.ip_configuration_name
   network_interface_name            = local.control_node.network_interface_name
   os_profile_admin_username         = var.os_profile_admin_username
-  os_profile_admin_public_key_value = file(var.os_profile_admin_public_key_path)
+  os_profile_admin_public_key_value = file("${path.root}/id_rsa.pub")
   os_profile_computer_name          = local.control_node.os_profile_computer_name
   public_ip_name                    = local.control_node.public_ip_name
   resource_group_location           = azurerm_resource_group.public.location
@@ -59,7 +59,7 @@ module "linux_servers" {
   vm_size                           = var.vm_size
   subnet_id                         = module.network.subnet_linux_servers_id
   network_security_group_id         = module.network.network_security_group_id
-  os_profile_admin_public_key_value = file(var.os_profile_admin_public_key_path)
+  os_profile_admin_public_key_value = file("${path.root}/id_rsa.pub")
 }
 
 module "windows_servers" {
@@ -99,9 +99,9 @@ module "storage" {
 module "configure_windows_servers_winrm_extension" {
   for_each                              = module.windows_servers
   source                                = "./modules/custom-script-extension"
-  custom_script_extension_absolute_path = "E:\\RiderProjects\\09_ANSIBLE\\ansible-control-node\\terraform\\scripts\\Configure-Ansible-Host.ps1"
-  custom_script_extension_file_name     = "Configure-Ansible-Host.ps1"
-  extension_name                        = "ConfigureAnsibleHost"
+  custom_script_extension_absolute_path = "${path.root}/scripts/Configure-Ansible-WinRM.ps1"
+  custom_script_extension_file_name     = "Configure-Ansible-WinRM.ps1"
+  extension_name                        = "Configure-Ansible-WinRM.ps1"
   storage_account_name                  = module.storage.storage_account_name
   storage_container_name                = module.storage.storage_container_name
   virtual_machine_id                    = each.value.id
@@ -114,9 +114,9 @@ module "configure_windows_servers_winrm_extension" {
 
 module "control_node_install_ansible_extension" {
   source                                = "./modules/linux-custom-script-extension"
-  custom_script_extension_absolute_path = "E:\\RiderProjects\\09_ANSIBLE\\ansible-control-node\\scripts\\install_ansible.sh"
-  custom_script_extension_file_name     = "install_ansible.sh"
-  extension_name                        = "InstallAnsible"
+  custom_script_extension_absolute_path = "${path.root}/scripts/Install-Ansible.sh"
+  custom_script_extension_file_name     = "Install-Ansible.sh"
+  extension_name                        = "Install-Ansible.sh"
   storage_account_name                  = module.storage.storage_account_name
   storage_container_name                = module.storage.storage_container_name
   virtual_machine_id                    = module.control_node.id
@@ -130,7 +130,7 @@ module "control_node_install_ansible_extension" {
 module "managed_nodes_install_nginx" {
   for_each                              = module.linux_servers
   source                                = "./modules/linux-custom-script-extension"
-  custom_script_extension_absolute_path = "E:\\RiderProjects\\09_ANSIBLE\\ansible-control-node\\scripts\\install_nginx.sh"
+  custom_script_extension_absolute_path = "${path.root}/scripts/scripts/Install-Nginx.sh"
   custom_script_extension_file_name     = "install_nginx_${each.key}.sh"
   extension_name                        = "InstallNginx_${each.key}"
   storage_account_name                  = module.storage.storage_account_name

@@ -3,11 +3,6 @@ variable "prefix" {
   description = "Resources name prefix"
 }
 
-variable "resource_group_name" {
-  type        = string
-  description = "Resource group name"
-}
-
 variable "resource_group_location" {
   type        = string
   description = "Location of the resource group."
@@ -56,11 +51,6 @@ variable "storage_os_disk_managed_disk_type" {
 variable "os_profile_admin_username" {
   type        = string
   description = "Specifies the name of the administrator account."
-}
-
-variable "os_profile_admin_public_key_path" {
-  type        = string
-  description = "Specifies the path to the public key file of the administrator account."
 }
 
 variable "os_profile_admin_password" {
